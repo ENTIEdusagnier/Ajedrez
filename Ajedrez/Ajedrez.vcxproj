@@ -127,7 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="mapa.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="game_logic.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mapa.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
