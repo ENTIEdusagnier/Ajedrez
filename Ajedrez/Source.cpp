@@ -52,8 +52,6 @@ void sacar_mapa() {
 
 
 
-
-
 	for (int i = 0; i < NUM_FILAS; i++) {
 		for (int j = 0; j < NUM_COLUMNAS; j++) {
 
