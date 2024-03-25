@@ -60,8 +60,7 @@ void poner_piezas(char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 
 void sacar_mapa(char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 
-
-
+	
 	for (int i = 0; i < NUM_FILAS; i++) {
 		for (int j = 0; j < NUM_COLUMNAS; j++) {
 
