@@ -9,26 +9,11 @@
 
 using namespace std;
 
-bool moviminento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+bool logica_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 
-	if (fila_origen < 0 || fila_origen >= NUM_FILAS || columna_origen < 0 || columna_origen >= NUM_COLUMNAS || fila_destino < 0 || fila_destino >= NUM_FILAS || columna_destino < 0 || columna_destino >= NUM_COLUMNAS)
+	if ((fila_destino != fila_origen - 2 && fila_destino != fila_origen - 1) || columna_origen != columna_destino)
 	{
-		cout << "Posicion insertada no esta dentro del tablero" << endl;
-		return false;
-	}
-	if (mapa[fila_origen][columna_origen] == SIN_NADA)
-	{
-		cout << "Posicion insertada no hay nada" << endl;
-		return false;
-	}
-	if (turno == "blancas" && mapa[fila_origen][columna_origen] >= 'A' && mapa[fila_origen][columna_origen] <= 'Z')
-	{
-		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
-		return false;
-	}
-	if (turno == "negras" && mapa[fila_origen][columna_origen] >= 'a' && mapa[fila_origen][columna_origen] <= 'z')
-	{
-		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
+		cout << "Estas intentando mover el peon en una direcion no posible" << endl;
 		return false;
 	}
 	else
@@ -36,9 +21,74 @@ bool moviminento_correcto(short fila_origen, short columna_origen, short fila_de
 		return true;
 	}
 
+}
+bool logica_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]) {
+
+	cout << "ola";
+	return true;
+}
+
+bool moviminento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+
+	//Verificamos que no pone unos numeros fuera del tablero
+	if (fila_origen < 0 || fila_origen >= NUM_FILAS || columna_origen < 0 || columna_origen >= NUM_COLUMNAS || fila_destino < 0 || fila_destino >= NUM_FILAS || columna_destino < 0 || columna_destino >= NUM_COLUMNAS)
+	{
+		cout << "Posicion insertada no esta dentro del tablero" << endl;
+		return false;
+	}
+	//Verificamos que no ponga una posición donde no hay ficha
+	if (mapa[fila_origen][columna_origen] == SIN_NADA)
+	{
+		cout << "Posicion insertada no hay nada" << endl;
+		return false;
+	}
+	//Verificamos que si esta el turno de las blancas (Mayusculas) no intente mover una ficha del jugador de negras (minusculas)
+	if (turno == "blancas" && mapa[fila_origen][columna_origen] >= 'a' && mapa[fila_origen][columna_origen] <= 'z')
+	{
+		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
+		return false;
+	}
+	//Verificamos lo mismo con el jugador de las negras.
+	if (turno == "negras" && mapa[fila_origen][columna_origen] >= 'A' && mapa[fila_origen][columna_origen] <= 'Z')
+	{
+		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
+		return false;
+	}
+	//Verifico que el peon (sea el turno de quien sea) se mueva hacia arriba 1 o 2 cuadrados solo, y no se mueva por las columnas es decir lateralmente.
+
+	else
+	{
+		bool resultado = false;
+		switch (mapa[fila_origen][columna_origen])
+		{
+		case 'P':
+		case 'p':
+			resultado = logica_peon(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			break;
+		case 't':
+		case 'T':
+			resultado = logica_torre(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			break;
+
+		}
+
+		if (resultado)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 
 
 }
+
+
+
+
 void mover_ficha(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 
 	char ficha_a_mover = mapa[fila_origen][columna_origen];
