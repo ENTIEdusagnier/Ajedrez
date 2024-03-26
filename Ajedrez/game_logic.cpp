@@ -1,4 +1,5 @@
 #include <iostream>
+#include <windows.h>
 #include "mapa.h"
 
 #define SIN_NADA '*'
@@ -10,8 +11,20 @@
 using namespace std;
 
 bool logica_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]) {
+	
+	bool pasa_encima_pieza= false;
+	
+	for (short i = fila_origen; i < fila_destino; i++)
+	{
+		if (mapa[i][columna_origen] != SIN_NADA)
+		{
+			pasa_encima_pieza = true; 
+			cout << "Estas pasando por encima de una pieza" << endl;
+			return true;
+		}
+	}
 
-	if ((fila_destino != fila_origen - 2 && fila_destino != fila_origen - 1) || columna_origen != columna_destino)
+	if (mapa[fila_origen][columna_origen] == 'P' && (fila_destino != fila_origen - 2 && fila_destino != fila_origen - 1) || columna_origen != columna_destino)
 	{
 		cout << "Estas intentando mover el peon en una direcion no posible" << endl;
 		return false;
@@ -95,12 +108,21 @@ void mover_ficha(short fila_origen, short columna_origen, short fila_destino, sh
 
 	mapa[fila_origen][columna_origen] = SIN_NADA;
 	mapa[fila_destino][columna_destino] = ficha_a_mover;
-	system("cls");
-	sacar_mapa(mapa);
+	
+}
+string cambiar_turno(string turno) {
 
+	if (turno == "blancas")
+	{
+		return "negras";
+	}
+	else
+	{
+		return "blancas";
+	}
 }
 
-void posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+bool posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	short fila_origen, columna_origen, fila_destino, columna_destino;
 	bool posicion_correcta = false;
@@ -129,25 +151,19 @@ void posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 			cout << "moviminento correcto" << endl;
 			posicion_correcta = true;
 			mover_ficha(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			Sleep(1000);
+			return true;
+			
 		}
 		else
 		{
 			cout << "moviminento incorrecto" << endl;
+			return false;
 		}
 	}
 
 }
-string cambiar_turno(string turno) {
 
-	if (turno == "blancas")
-	{
-		return "negras";
-	}
-	else
-	{
-		return "blancas";
-	}
-}
 
 bool jaque_mate() {
 

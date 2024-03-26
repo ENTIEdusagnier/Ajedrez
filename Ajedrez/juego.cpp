@@ -2,6 +2,8 @@
 #include "mapa.h"
 #include "game_logic.h"
 
+#include <windows.h> // Para hacer un Sleep para poder dejar un tiempo y borrar la terminal. (Sacado de mi proyecto hundir la flota).
+
 #define SIN_NADA '*'
 #define ESPACIO ' '
 
@@ -23,8 +25,15 @@ void juego() {
 
 	while (juego_activo)
 	{
+		cout << "El turno es de: " << turno << endl;
 		sacar_mapa(mapa);
-		posiciones_user(mapa, turno);
+		if (posiciones_user(mapa, turno)) 
+		{
+			turno = cambiar_turno(turno);
+			system("cls");
+			
+		}
+		
 
 		if (jaque_mate())
 		{
