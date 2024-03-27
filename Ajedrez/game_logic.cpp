@@ -11,28 +11,48 @@
 using namespace std;
 
 bool logica_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]) {
-	
-	bool pasa_encima_pieza= false;
-	
+
+	bool pasa_encima_pieza = false;
+	bool movimiento_lateral = false;
+
+	if (columna_origen != columna_destino)
+	{
+		movimiento_lateral = true;
+	}
+
 	for (short i = fila_origen; i < fila_destino; i++)
 	{
 		if (mapa[i][columna_origen] != SIN_NADA)
 		{
-			pasa_encima_pieza = true; 
+			pasa_encima_pieza = true;
 			cout << "Estas pasando por encima de una pieza" << endl;
 			return true;
 		}
 	}
+	if (mapa[fila_origen][columna_origen] == 'P') {
+		//Verifica que el movimiento vertical del peon es correcto y no es lateral.
+		if (movimiento_lateral == false && (fila_destino != fila_origen - 1 && fila_destino != fila_origen - 2)) {
+			cout << "Estas intentando mover el peon en una direcion no posible" << endl;
+			return false;
+		}
+		//En el caso que es lateral verificamos que los movimientos no sean mayor a 1
+		if (movimiento_lateral == true && ((columna_destino != columna_origen - 1 && columna_destino != columna_origen + 1 )|| fila_destino != fila_origen - 1))
+		{
+			cout << "Estas intentando mover el peon en una direcion no posible" << endl;
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 
-	if (mapa[fila_origen][columna_origen] == 'P' && (fila_destino != fila_origen - 2 && fila_destino != fila_origen - 1) || columna_origen != columna_destino)
-	{
-		cout << "Estas intentando mover el peon en una direcion no posible" << endl;
-		return false;
 	}
-	else
-	{
-		return true;
-	}
+
+
+
+	
+
+
 
 }
 bool logica_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]) {
@@ -108,7 +128,7 @@ void mover_ficha(short fila_origen, short columna_origen, short fila_destino, sh
 
 	mapa[fila_origen][columna_origen] = SIN_NADA;
 	mapa[fila_destino][columna_destino] = ficha_a_mover;
-	
+
 }
 string cambiar_turno(string turno) {
 
@@ -153,7 +173,7 @@ bool posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 			mover_ficha(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			Sleep(1000);
 			return true;
-			
+
 		}
 		else
 		{
