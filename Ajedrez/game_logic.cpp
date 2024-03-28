@@ -1,89 +1,45 @@
 #include <iostream>
 #include <windows.h>
 #include "mapa.h"
+#include "movimientos_peon.h"
 
 #define SIN_NADA '*'
 #define ESPACIO ' '
 
 #define NUM_FILAS 9
 #define NUM_COLUMNAS 9
+#define REINA_BLANCA 'Q'
+#define REINA_NEGRA 'q'
 
 using namespace std;
-
-//Declaro una constante global las cuales representan las piezas que hay en el tablero
-const char piezas_minus[8] = { 't', 'h', 'b', 'q', 'k', 'b', 'h', 't' };
-const char peones_minus[8] = { 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' };
-const char piezas_mayus[8] = { 'T', 'H', 'B', 'Q', 'K', 'B', 'H', 'T' };
-const char peones_mayus[8] = { 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P' };
-
-
 
 
 bool logica_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	bool pasa_encima_pieza = false;
-	bool movimiento_lateral = false;
-	bool pieza_comida = false;
 
-	if (columna_origen != columna_destino)
-	{
-		movimiento_lateral = true;
+	bool peon_correcto = false;
+
+	bool movimiento_lateral = (columna_origen != columna_destino);
+
+	if (movimiento_lateral) {
+		peon_correcto = verifica_movimiento_lateral(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 	}
-
-	if (!movimiento_lateral)
-	{
-		for (short i = fila_origen; i < fila_destino; i++)
-		{
-			if (mapa[i][columna_origen] != SIN_NADA)
-			{
-				pasa_encima_pieza = true;
-				cout << "Estas pasando por encima de una pieza" << endl;
-
-			}
-		}
-	}
-	else
-	{
-		// Verifica si el movimiento es lateral
-		// Verifica si la ficha que hay es de oponente
-		if (mapa[fila_destino][columna_destino] != SIN_NADA && ((turno == "blancas" && mapa[fila_destino][columna_destino] >= 'a') || (turno == "negras" && mapa[fila_destino][columna_destino] <= 'Z'))) {
-			// El peon mata una ficha del oponente
-			cout << "El peon mata." << endl;
-			pieza_comida = true;
-		}
-		else {
-			// El peon pasa de largo sin capturar una ficha
-			cout << "El peon pasa de largo y por encima de otra ficha." << endl;
-			return false;
-		}
-	}
-
-	if (turno == "blancas") {
-		//Verifica que el movimiento vertical del peon es correcto y no es lateral.
-		if (movimiento_lateral == false && (fila_destino != fila_origen - 1 && fila_destino != fila_origen - 2)) {
-			cout << "Estas intentando mover el peon en una direcion no posible" << endl;
-			return false;
-		}
-		//En el caso que es lateral verificamos que los movimientos no sean mayor a 1
-		if (movimiento_lateral == true && ((columna_destino != columna_origen - 1 && columna_destino != columna_origen + 1) || fila_destino != fila_origen - 1))
-		{
-			cout << "Estas intentando mover el peon en una direcion no posible" << endl;
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-
+	else {
+		peon_correcto = verifica_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 	}
 
 
-
-
-
-
-
+	if (peon_correcto) {
+		//peon_a_reina(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+		return true;
+	}
+	else {
+		return false;
+	}
 }
+
+
+
 bool logica_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 
 	cout << "ola";
@@ -151,12 +107,33 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 
 
 
-void mover_ficha(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]) {
+void mover_ficha(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	char ficha_a_mover = mapa[fila_origen][columna_origen];
 
-	mapa[fila_origen][columna_origen] = SIN_NADA;
-	mapa[fila_destino][columna_destino] = ficha_a_mover;
+	//Verifica si el peon correcto se combierte a dama o no.
+	if (peon_a_reina(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno))
+	{
+		if (turno == "blancas")
+		{
+			mapa[fila_origen][columna_origen] = SIN_NADA;
+			mapa[fila_destino][columna_destino] = REINA_BLANCA;
+		}
+		else
+		{
+			mapa[fila_origen][columna_origen] = SIN_NADA;
+			mapa[fila_destino][columna_destino] = REINA_NEGRA;
+		}
+
+	}
+	else {
+		mapa[fila_origen][columna_origen] = SIN_NADA;
+		mapa[fila_destino][columna_destino] = ficha_a_mover;
+	}
+
+
+
+
 
 }
 string cambiar_turno(string turno) {
@@ -199,7 +176,7 @@ bool posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 		{
 			cout << "moviminento correcto" << endl;
 			posicion_correcta = true;
-			mover_ficha(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			mover_ficha(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 			Sleep(1000);
 			return true;
 
