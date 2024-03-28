@@ -30,7 +30,6 @@ bool logica_peon(short fila_origen, short columna_origen, short fila_destino, sh
 
 
 	if (peon_correcto) {
-		//peon_a_reina(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 		return true;
 	}
 	else {
@@ -40,9 +39,32 @@ bool logica_peon(short fila_origen, short columna_origen, short fila_destino, sh
 
 
 
-bool logica_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]) {
+bool logica_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	cout << "ola";
+	bool es_turno_blancas = (turno == "blancas");
+	bool movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
+
+	if (fila_origen != fila_destino && columna_origen != columna_destino)
+	{
+		cout << "No puedes mover la torre en diagonal" << endl;
+		return false;
+	}
+
+	if (es_turno_blancas)
+	{
+		for (short i = fila_origen + 1; i = fila_destino - 1; i++)
+		{
+			if (mapa[i][columna_origen] != SIN_NADA) {
+				system("cls");
+				cout << "Estas pasando por encima de una pieza" << endl;
+				return false;
+			}
+		}
+	}
+
+
+
+
 	return true;
 }
 
@@ -85,7 +107,7 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 			break;
 		case 't':
 		case 'T':
-			resultado = logica_torre(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			resultado = logica_torre(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 			break;
 
 		}
@@ -131,11 +153,8 @@ void mover_ficha(short fila_origen, short columna_origen, short fila_destino, sh
 		mapa[fila_destino][columna_destino] = ficha_a_mover;
 	}
 
-
-
-
-
 }
+
 string cambiar_turno(string turno) {
 
 	if (turno == "blancas")
