@@ -10,8 +10,8 @@ using namespace std;
 void crear_tabla(char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 
 
-	for (int i = 0; i < NUM_FILAS; i++) {
-		for (int j = 0; j < NUM_COLUMNAS; j++) {
+	for (short i = 0; i < NUM_FILAS; i++) {
+		for (short j = 0; j < NUM_COLUMNAS; j++) {
 
 			if (i == 0 && j != 0) {
 				// De esta manera me permite convertir el int en char.
@@ -31,10 +31,10 @@ void crear_tabla(char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 }
 void poner_piezas(char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 
-	char piezas_minus[] = { 't', 'h', 'b', 'q', 'k', 'b', 'h', 't' };
-	char peones_minus[] = { 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' };
-	char piezas_mayus[] = { 'T', 'H', 'B', 'Q', 'K', 'B', 'H', 'T' };
-	char peones_mayus[] = { 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P' };
+	const char piezas_minus[8] = { 't', 'h', 'b', 'q', 'k', 'b', 'h', 't' };
+	const char peones_minus[8] = { 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' };
+	const char piezas_mayus[8] = { 'T', 'H', 'B', 'Q', 'K', 'B', 'H', 'T' };
+	const char peones_mayus[8] = { 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P' };
 
 
 	for (int i = 0; i < NUM_FILAS; i++) {
@@ -61,8 +61,8 @@ void poner_piezas(char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 void sacar_mapa(char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 
 	
-	for (int i = 0; i < NUM_FILAS; i++) {
-		for (int j = 0; j < NUM_COLUMNAS; j++) {
+	for (short i = 0; i < NUM_FILAS; i++) {
+		for (short j = 0; j < NUM_COLUMNAS; j++) {
 
 			cout << mapa[i][j] << ESPACIO;
 

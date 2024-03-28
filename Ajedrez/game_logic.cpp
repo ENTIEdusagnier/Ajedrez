@@ -10,33 +10,62 @@
 
 using namespace std;
 
-bool logica_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]) {
+//Declaro una constante global las cuales representan las piezas que hay en el tablero
+const char piezas_minus[8] = { 't', 'h', 'b', 'q', 'k', 'b', 'h', 't' };
+const char peones_minus[8] = { 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' };
+const char piezas_mayus[8] = { 'T', 'H', 'B', 'Q', 'K', 'B', 'H', 'T' };
+const char peones_mayus[8] = { 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P' };
+
+
+
+
+bool logica_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	bool pasa_encima_pieza = false;
 	bool movimiento_lateral = false;
+	bool pieza_comida = false;
 
 	if (columna_origen != columna_destino)
 	{
 		movimiento_lateral = true;
 	}
 
-	for (short i = fila_origen; i < fila_destino; i++)
+	if (!movimiento_lateral)
 	{
-		if (mapa[i][columna_origen] != SIN_NADA)
+		for (short i = fila_origen; i < fila_destino; i++)
 		{
-			pasa_encima_pieza = true;
-			cout << "Estas pasando por encima de una pieza" << endl;
-			return true;
+			if (mapa[i][columna_origen] != SIN_NADA)
+			{
+				pasa_encima_pieza = true;
+				cout << "Estas pasando por encima de una pieza" << endl;
+
+			}
 		}
 	}
-	if (mapa[fila_origen][columna_origen] == 'P') {
+	else
+	{
+		// Verifica si el movimiento es lateral
+		// Verifica si la ficha que hay es de oponente
+		if (mapa[fila_destino][columna_destino] != SIN_NADA && ((turno == "blancas" && mapa[fila_destino][columna_destino] >= 'a') || (turno == "negras" && mapa[fila_destino][columna_destino] <= 'Z'))) {
+			// El peon mata una ficha del oponente
+			cout << "El peon mata." << endl;
+			pieza_comida = true;
+		}
+		else {
+			// El peon pasa de largo sin capturar una ficha
+			cout << "El peon pasa de largo y por encima de otra ficha." << endl;
+			return false;
+		}
+	}
+
+	if (turno == "blancas") {
 		//Verifica que el movimiento vertical del peon es correcto y no es lateral.
 		if (movimiento_lateral == false && (fila_destino != fila_origen - 1 && fila_destino != fila_origen - 2)) {
 			cout << "Estas intentando mover el peon en una direcion no posible" << endl;
 			return false;
 		}
 		//En el caso que es lateral verificamos que los movimientos no sean mayor a 1
-		if (movimiento_lateral == true && ((columna_destino != columna_origen - 1 && columna_destino != columna_origen + 1 )|| fila_destino != fila_origen - 1))
+		if (movimiento_lateral == true && ((columna_destino != columna_origen - 1 && columna_destino != columna_origen + 1) || fila_destino != fila_origen - 1))
 		{
 			cout << "Estas intentando mover el peon en una direcion no posible" << endl;
 			return false;
@@ -50,7 +79,7 @@ bool logica_peon(short fila_origen, short columna_origen, short fila_destino, sh
 
 
 
-	
+
 
 
 
@@ -61,7 +90,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 	return true;
 }
 
-bool moviminento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+bool movimiento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	//Verificamos que no pone unos numeros fuera del tablero
 	if (fila_origen < 0 || fila_origen >= NUM_FILAS || columna_origen < 0 || columna_origen >= NUM_COLUMNAS || fila_destino < 0 || fila_destino >= NUM_FILAS || columna_destino < 0 || columna_destino >= NUM_COLUMNAS)
@@ -96,7 +125,7 @@ bool moviminento_correcto(short fila_origen, short columna_origen, short fila_de
 		{
 		case 'P':
 		case 'p':
-			resultado = logica_peon(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			resultado = logica_peon(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 			break;
 		case 't':
 		case 'T':
@@ -166,7 +195,7 @@ bool posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 		cout << "Columna donde quieres moverla" << endl;
 		cin >> columna_destino;
 
-		if (moviminento_correcto(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno))
+		if (movimiento_correcto(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno))
 		{
 			cout << "moviminento correcto" << endl;
 			posicion_correcta = true;
