@@ -18,7 +18,7 @@ void juego() {
 
 	char mapa[NUM_FILAS][NUM_COLUMNAS];
 	bool juego_activo = true;
-	string turno = "blancas";
+	string turno = "negras";
 
 	crear_tabla(mapa);
 	poner_piezas(mapa);
@@ -29,7 +29,7 @@ void juego() {
 		sacar_mapa(mapa);
 		if (posiciones_user(mapa, turno)) 
 		{
-			turno = cambiar_turno(turno);
+			//turno = cambiar_turno(turno);
 			system("cls");
 			
 		}
