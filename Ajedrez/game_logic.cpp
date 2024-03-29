@@ -42,9 +42,15 @@ bool logica_peon(short fila_origen, short columna_origen, short fila_destino, sh
 bool logica_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	bool es_turno_blancas = (turno == "blancas");
-	bool movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
+	bool es_movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
+	bool es_movimiento_lateral = (fila_origen == fila_destino && columna_origen != columna_destino);
 
-	if (fila_origen != fila_destino && columna_origen != columna_destino)
+	//Me indica el la direcion veritcal (arriba o abajo) la qual quiere que se mueva la torre. Para poder hacer diferentes if's.
+	bool tipo_movimiento_vertical = (fila_destino < fila_origen);
+
+	bool pieza_por_el_medio = false;
+
+	if (!es_movimiento_lateral && !es_movimiento_vertical)
 	{
 		cout << "No puedes mover la torre en diagonal" << endl;
 		return false;
@@ -52,14 +58,59 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 
 	if (es_turno_blancas)
 	{
-		for (short i = fila_origen + 1; i = fila_destino - 1; i++)
+		if (es_movimiento_vertical)
 		{
-			if (mapa[i][columna_origen] != SIN_NADA) {
-				system("cls");
-				cout << "Estas pasando por encima de una pieza" << endl;
-				return false;
+			if (tipo_movimiento_vertical)
+			{
+				for (short i = fila_destino; i < fila_origen; i++)
+				{
+					if (mapa[i][columna_origen] <= 'Z') {
+						system("cls");
+						cout << "Estas pasando por encima de una pieza" << endl;
+						pieza_por_el_medio = true;
+					}
+				}
+				if (mapa[fila_destino][columna_destino] >= 'a' && !pieza_por_el_medio)
+				{
+					cout << "Pieza comida" << endl;
+					return true;
+				}
+				if (pieza_por_el_medio)
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+
+			}
+			else
+			{
+				for (short i = fila_origen + 1; i <= fila_destino; i++)
+				{
+					if (mapa[i][columna_origen] <= 'Z') {
+						system("cls");
+						cout << "Estas pasando por encima de una pieza" << endl;
+						pieza_por_el_medio = true;
+					}
+					if (mapa[fila_destino][columna_destino] >= 'a' && !pieza_por_el_medio)
+					{
+						cout << "Pieza comida" << endl;
+						return true;
+					}
+					if (pieza_por_el_medio)
+					{
+						return false;
+					}
+					else
+					{
+						return true;
+					}
+				}
 			}
 		}
+
 	}
 
 
