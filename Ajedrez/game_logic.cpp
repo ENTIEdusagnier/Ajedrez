@@ -66,7 +66,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 			{
 				for (short i = fila_destino; i < fila_origen; i++)
 				{
-					if (mapa[i][columna_origen] <= 'Z' && mapa[i][columna_origen] >= 'A') {
+					if (mapa[i][columna_origen] <= 'Z' && mapa[i][columna_origen] >= 'A' || mapa[i + 1][columna_origen] >= 'a') {
 						system("cls");
 						cout << "Estas pasando por encima de una pieza" << endl;
 						pieza_por_el_medio = true;
@@ -91,7 +91,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 			{
 				for (short i = fila_origen + 1; i <= fila_destino; i++)
 				{
-					if (mapa[i][columna_origen] <= 'Z' && mapa[i][columna_origen] >= 'A') {
+					if (mapa[i][columna_origen] <= 'Z' && mapa[i][columna_origen] >= 'A' || mapa[i - 1][columna_origen] >= 'a' ) {
 						system("cls");
 						cout << "Estas pasando por encima de una pieza" << endl;
 						pieza_por_el_medio = true;
@@ -118,7 +118,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 			{
 				for (short i = columna_origen + 1; i <= columna_destino; i++)
 				{
-					if (mapa[fila_origen][i] <= 'Z' && mapa[fila_origen][i] >= 'A') {
+					if (mapa[fila_origen][i] <= 'Z' && mapa[fila_origen][i] >= 'A' || mapa[fila_origen][i - 1] >= 'a') {
 						system("cls");
 						cout << "Estas pasando por encima de una pieza" << endl;
 						pieza_por_el_medio = true;
@@ -143,7 +143,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 			{
 				for (short i = columna_destino; i < columna_origen; i++)
 				{
-					if (mapa[fila_origen][i] <= 'Z' && mapa[fila_origen][i] >= 'A') {
+					if (mapa[fila_origen][i] <= 'Z' && mapa[fila_origen][i] >= 'A' || mapa[fila_origen][i + 1] >= 'a') {
 						system("cls");
 						cout << "Estas pasando por encima de una pieza" << endl;
 						pieza_por_el_medio = true;
@@ -169,90 +169,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 	}
 	else
 	{
-		if (es_movimiento_vertical) {
-			if (tipo_movimiento_vertical) {
-				for (short i = fila_origen + 1; i <= fila_destino; i++) {
-					// Lógica para el movimiento vertical hacia abajo de las piezas negras
-					if (mapa[i][columna_origen] >= 'A' && mapa[i][columna_origen] <= 'Z') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-				}
-				if (mapa[fila_destino][columna_destino] >= 'A' && !pieza_por_el_medio) {
-					cout << "Pieza comida" << endl;
-					return true;
-				}
-				if (pieza_por_el_medio) {
-					return false;
-				}
-				else {
-					return true;
-				}
-			}
-			else {
-				for (short i = fila_origen; i > fila_destino; i--) {
-					// Lógica para el movimiento vertical hacia arriba de las piezas negras
-					if (mapa[i][columna_origen] >= 'A' && mapa[i][columna_origen] <= 'Z') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-				}
-				if (mapa[fila_destino][columna_destino] >= 'A' && !pieza_por_el_medio) {
-					cout << "Pieza comida" << endl;
-					return true;
-				}
-				if (pieza_por_el_medio) {
-					return false;
-				}
-				else {
-					return true;
-				}
-			}
-		}
-		else {
-			if (tipo_movimineto_lateral) {
-				for (short i = columna_origen; i > columna_destino; i--) {
-					// Lógica para el movimiento lateral hacia la izquierda de las piezas negras
-					if (mapa[fila_origen][i] >= 'A' && mapa[fila_origen][i] <= 'Z') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-				}
-				if (mapa[fila_destino][columna_destino] >= 'A' && !pieza_por_el_medio) {
-					cout << "Pieza comida" << endl;
-					return true;
-				}
-				if (pieza_por_el_medio) {
-					return false;
-				}
-				else {
-					return true;
-				}
-			}
-			else {
-				for (short i = columna_origen + 1; i <= columna_destino; i++) {
-					// Lógica para el movimiento lateral hacia la derecha de las piezas negras
-					if (mapa[fila_origen][i] >= 'A' && mapa[fila_origen][i] <= 'Z') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-				}
-				if (mapa[fila_destino][columna_destino] >= 'A' && !pieza_por_el_medio) {
-					cout << "Pieza comida" << endl;
-					return true;
-				}
-				if (pieza_por_el_medio) {
-					return false;
-				}
-				else {
-					return true;
-				}
-			}
-		}
+		
 	}
 
 
