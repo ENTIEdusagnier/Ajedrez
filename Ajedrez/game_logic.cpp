@@ -347,10 +347,33 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 
 }
 
+bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+
+	bool es_movimiento_iquierda_arriba = (fila_origen - fila_destino == columna_origen - columna_destino);
+	bool es_movimiento_derecha_arriba = (fila_origen - fila_destino == columna_destino - columna_origen);
+
+	bool es_movimiento_iquierda_abajo = (fila_destino - fila_origen == columna_origen - columna_destino);
+	bool es_movimiento_derecha_abajo = (fila_destino - fila_origen == columna_origen - columna_destino);
+
+	if (!es_movimiento_iquierda_arriba && !es_movimiento_derecha_arriba && !es_movimiento_iquierda_abajo && !es_movimiento_derecha_abajo)
+	{
+		cout << "El alfil no puede hacer este movimiento." << endl; 
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+
+	
+
+}
+
 bool movimiento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	//Verificamos que no pone unos numeros fuera del tablero
-	if (fila_origen < 0 || fila_origen >= NUM_FILAS || columna_origen < 0 || columna_origen >= NUM_COLUMNAS || fila_destino < 0 || fila_destino >= NUM_FILAS || columna_destino < 0 || columna_destino >= NUM_COLUMNAS)
+	if (fila_origen < 0 || fila_origen >= NUM_FILAS || columna_origen < 0 || columna_origen >= NUM_COLUMNAS || fila_destino < 0 
+		|| fila_destino >= NUM_FILAS || columna_destino < 0 || columna_destino >= NUM_COLUMNAS)
 	{
 		system("cls");
 		cout << "Posicion insertada no esta dentro del tablero" << endl;
@@ -396,7 +419,10 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 		case 'h':
 			resultado = logica_horse(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 			break;
-
+		case 'B':
+		case 'b':
+			resultado = logica_alfil(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+			break;
 		}
 
 		if (resultado)
