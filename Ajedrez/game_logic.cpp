@@ -277,6 +277,18 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 	}
 
 }
+bool logica_horse(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+
+	bool es_turno_blancas = (turno == "blancas");
+	bool es_movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
+	bool es_movimiento_lateral = (fila_origen == fila_destino && columna_origen != columna_destino); 
+	
+	
+	
+	
+	return true;
+
+}
 
 bool movimiento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
@@ -318,6 +330,10 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 		case 't':
 		case 'T':
 			resultado = logica_torre(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+			break;
+		case 'H':
+		case 'h':
+			resultado = logica_horse(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 			break;
 
 		}
