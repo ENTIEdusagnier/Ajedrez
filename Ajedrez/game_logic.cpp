@@ -280,13 +280,70 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 bool logica_horse(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	bool es_turno_blancas = (turno == "blancas");
-	bool es_movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
-	bool es_movimiento_lateral = (fila_origen == fila_destino && columna_origen != columna_destino); 
-	
-	
-	
-	
-	return true;
+
+	bool es_movimiento_vertical_derecha = ((fila_origen - fila_destino == 2) && (columna_destino - columna_origen == 1));
+	bool es_movimiento_vertical_izquierda = ((fila_origen - fila_destino == 2) && (columna_origen - columna_destino == 1));
+
+	bool es_movimineto_inferior_derecha = ((fila_destino - fila_origen == 2) && (columna_destino - columna_origen == 1));
+	bool es_movimineto_inferior_izquierda = ((fila_destino - fila_origen == 2) && (columna_origen - columna_destino == 1));
+
+	bool es_movimiento_derecha_arriba = ((fila_origen - fila_destino == 1) && (columna_destino - columna_origen == 2));
+	bool es_movimiento_derecha_abajo = ((fila_destino - fila_origen == 1) && (columna_destino - columna_origen == 2));
+
+	bool es_movimiento_izquierda_arriba = ((fila_origen - fila_destino == 1) && (columna_origen - columna_destino == 2));
+	bool es_movimiento_izquierda_abajo = ((fila_destino - fila_origen == 1) && (columna_origen - columna_destino == 2));
+
+
+	if (!es_movimiento_vertical_derecha && !es_movimiento_vertical_izquierda && !es_movimineto_inferior_derecha && !es_movimineto_inferior_izquierda
+		&& !es_movimiento_derecha_arriba && !es_movimiento_derecha_abajo && !es_movimiento_izquierda_arriba && !es_movimiento_izquierda_abajo)
+	{
+		cout << "Caballo no puede hacer ese movimiento" << endl;
+		return false;
+	}
+	else
+	{
+		if (turno == "blancas")
+		{
+
+			if (mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
+			{
+				system("cls");
+				cout << "Estas intentando colocar el caballo en una pieza propia" << endl;
+				return false;
+			}
+			if (mapa[fila_destino][columna_destino] >= 'a')
+			{
+				cout << "Caballo mata." << endl;
+				return true;
+			}
+			if (mapa[fila_destino][columna_destino] == SIN_NADA)
+			{
+				return true;
+			}
+		}
+		else
+		{
+			if (mapa[fila_destino][columna_destino] >= 'a' && mapa[fila_destino][columna_destino] <= 'z')
+			{
+				system("cls");
+				cout << "Estas intentando colocar el caballo en una pieza propia" << endl;
+				return false;
+			}
+			if (mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
+			{
+				cout << "Caballo mata." << endl;
+				return true;
+			}
+			if (mapa[fila_destino][columna_destino] == SIN_NADA)
+			{
+				return true;
+			}
+		}
+	}
+
+
+
+
 
 }
 
@@ -295,24 +352,28 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 	//Verificamos que no pone unos numeros fuera del tablero
 	if (fila_origen < 0 || fila_origen >= NUM_FILAS || columna_origen < 0 || columna_origen >= NUM_COLUMNAS || fila_destino < 0 || fila_destino >= NUM_FILAS || columna_destino < 0 || columna_destino >= NUM_COLUMNAS)
 	{
+		system("cls");
 		cout << "Posicion insertada no esta dentro del tablero" << endl;
 		return false;
 	}
 	//Verificamos que no ponga una posición donde no hay ficha
 	if (mapa[fila_origen][columna_origen] == SIN_NADA)
 	{
+		system("cls");
 		cout << "Posicion insertada no hay nada" << endl;
 		return false;
 	}
 	//Verificamos que si esta el turno de las blancas (Mayusculas) no intente mover una ficha del jugador de negras (minusculas)
 	if (turno == "blancas" && mapa[fila_origen][columna_origen] >= 'a' && mapa[fila_origen][columna_origen] <= 'z')
 	{
+		system("cls");
 		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
 		return false;
 	}
 	//Verificamos lo mismo con el jugador de las negras.
 	if (turno == "negras" && mapa[fila_origen][columna_origen] >= 'A' && mapa[fila_origen][columna_origen] <= 'Z')
 	{
+		system("cls");
 		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
 		return false;
 	}
@@ -428,6 +489,7 @@ bool posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 		}
 		else
 		{
+			system("cls");
 			cout << "moviminento incorrecto" << endl;
 			return false;
 		}
