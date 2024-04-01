@@ -1,5 +1,9 @@
 # Ajedrez
 
-La logica puede variar (es decir hace lo mismo pero diferente) debido a que esta hecho en diferentes dias.
+La lógica puede variar (es decir, hace lo mismo pero de manera diferente) debido a que está hecho en diferentes días.
 
-TODA LA LOGICA ES PROPIA. NO HAY NADA DE PLAGIO. En caso que detecte posible plagio avisa porque no he copiado ni usado chatGPT fuera de lo comentado (Si hay).
+TODA LA LÓGICA ES ORIGINAL. NO HAY NINGÚN PLAGIO. En caso de que detectes posible plagio, avísame, ya que no he copiado ni utilizado chatGPT fuera de lo comentado (si acaso).
+
+Puede haber cosas que podrían mejorar, es decir, que funcionan, pero haciendo un cambio mínimo podría lograr lo mismo sin agregar más líneas. Al funcionar correctamente, prefiero no modificarlo para evitar errores.
+
+Recomiendo que, si crees que hay plagio, revises los commits para ver que la lógica no cambia drásticamente. También, todo está hecho con todas mis capacidades y aprendizajes de programación.
