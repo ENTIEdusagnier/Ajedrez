@@ -229,46 +229,26 @@ bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, s
 			alfil_correcto = verifica_iquierda_arriba(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 
 		}
-		//Falta hacer la logica correcta
 		if (es_movimiento_derecha_arriba)
 		{
-			for (short fila = fila_origen - 1, columna = columna_origen + 1; fila > fila_destino && columna < columna_destino; fila--, columna++)
-			{
-				if (mapa[fila][columna] >= 'A')
-				{
-					cout << "Estas pasando por encima de una pieza" << endl;
-					return false;
-				}
-			}
-			if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= 'a')
-				|| (turno == "negras" && mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
-				|| mapa[fila_destino][fila_destino] == SIN_NADA) {
+			alfil_correcto = verifica_derecha_arriba(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 
-				cout << "Ficha puesta" << endl;
-				return true;
-			}
-		}if (es_movimiento_iquierda_abajo)
+		}
+		if (es_movimiento_iquierda_abajo)
 		{
-			for (short fila = fila_origen + 1, columna = columna_origen - 1; fila < fila_destino && columna > columna_destino; fila++, columna--)
-			{
-
-
-				if (mapa[fila][columna] >= 'A')
-				{
-					cout << "Estas pasando por encima de una pieza" << endl;
-					return false;
-				}
-
-			}
-			if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= 'a')
-				|| (turno == "negras" && mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
-				|| mapa[fila_destino][fila_destino] == SIN_NADA) {
-
-				cout << "Ficha puesta" << endl;
-				return true;
-			}
+			alfil_correcto = verifica_iquierda_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 		}
 	}
+
+	if (!alfil_correcto)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+
 }
 
 bool movimiento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {

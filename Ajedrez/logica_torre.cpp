@@ -16,17 +16,20 @@ bool verifica_movimiento_vertical_B(short fila_origen, short columna_origen, sho
 
 	for (short i = fila_destino; i < fila_origen; i++)
 	{
+		//Verifico que no haya ninguna ficha propia o enemiga durate el recorido
 		if (mapa[i][columna_origen] <= 'Z' && mapa[i][columna_origen] >= 'A' || mapa[i + 1][columna_origen] >= 'a') {
 			system("cls");
 			cout << "Estas pasando por encima de una pieza" << endl;
 			pieza_por_el_medio = true;
 		}
 	}
+	//Si la ficha final es enemiga y no ha pasado por encima de otra pieza se da por comida
 	if (mapa[fila_destino][columna_destino] >= 'a' && !pieza_por_el_medio)
 	{
 		cout << "Pieza comida" << endl;
 		return true;
 	}
+	//Si pasa por encima de una pieza se retorna falso
 	if (pieza_por_el_medio)
 	{
 		return false;
