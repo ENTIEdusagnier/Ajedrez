@@ -286,7 +286,7 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 	bool es_movimiento_vertical_izquierda = ((fila_origen - fila_destino == 2) && (columna_origen - columna_destino == 1));
 	bool es_movimineto_inferior_derecha = ((fila_destino - fila_origen == 2) && (columna_destino - columna_origen == 1));
 	bool es_movimineto_inferior_izquierda = ((fila_destino - fila_origen == 2) && (columna_origen - columna_destino == 1));
-	
+
 	//Verifica los movimientos hacia un lado y luego arriba o abajo
 	bool es_movimiento_derecha_arriba = ((fila_origen - fila_destino == 1) && (columna_destino - columna_origen == 2));
 	bool es_movimiento_derecha_abajo = ((fila_destino - fila_origen == 1) && (columna_destino - columna_origen == 2));
@@ -348,13 +348,13 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 }
 
 bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
-	
+
 	bool es_turno_blancas = (turno == "blancas");
-	
+
 	//Mira si el movimiento es hacia arriba la izquierda y verifica si es en diagonal
 	bool es_movimiento_iquierda_arriba = (fila_origen - fila_destino == columna_origen - columna_destino && fila_destino < fila_origen && columna_destino < columna_origen);
 	//Mira si el movimiento es hacia arriba la derecha y verifica si es en diagonal
-	bool es_movimiento_derecha_arriba = (fila_origen - fila_destino == columna_destino - columna_origen && fila_destino < fila_origen && columna_destino > columna_origen); 
+	bool es_movimiento_derecha_arriba = (fila_origen - fila_destino == columna_destino - columna_origen && fila_destino < fila_origen && columna_destino > columna_origen);
 	//Mira si el movimiento es hacia abajo la izquierda y verifica si es en diagonal
 	bool es_movimiento_iquierda_abajo = (fila_destino - fila_origen == columna_origen - columna_destino && fila_destino > fila_origen && columna_destino < columna_origen);
 	//Mira si el movimiento es hacia abajo la derecha y verifica si es en diagonal
@@ -363,7 +363,7 @@ bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, s
 	//Si no esta bien el movimiento dara error y retorna false.
 	if (!es_movimiento_iquierda_arriba && !es_movimiento_derecha_arriba && !es_movimiento_iquierda_abajo && !es_movimiento_derecha_abajo)
 	{
-		cout << "El alfil no puede hacer este movimiento." << endl; 
+		cout << "El alfil no puede hacer este movimiento." << endl;
 		return false;
 	}
 	else
@@ -373,6 +373,7 @@ bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, s
 		{
 			if (es_movimiento_derecha_abajo)
 			{
+				//Hago un for desde la posicion origen + 1 hasta antes del destino para verificar que no hay nada entre el desplacamiento. (El mas uno es para que no detecte la letra donde esta la ficha)
 				for (short i = fila_origen + 1; i < fila_destino; i++)
 				{
 					for (short y = columna_origen + 1; y < columna_destino; y++)
@@ -383,29 +384,75 @@ bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, s
 							return false;
 						}
 					}
-
+				}
+				if (mapa[fila_destino][fila_destino] >= 'a' || mapa[fila_destino][fila_destino] == SIN_NADA)
+				{
+					cout << "Ficha puesta" << endl;
+					return true;
 				}
 			}
+			if (es_movimiento_iquierda_arriba)
+			{
+				for (short i = fila_destino + 1; i < fila_origen; i++)
+				{
+					for (short y = columna_destino + 1; y < fila_origen; y++)
+					{
+						if (mapa[i][y] >= 'A')
+						{
+							cout << "Estas pasando por encima de una pieza" << endl;
+							return false;
+						}
+					}
+				}
+				if (mapa[fila_destino][fila_destino] >= 'a' || mapa[fila_destino][fila_destino] == SIN_NADA)
+				{
+					cout << "Ficha puesta" << endl;
+					return true;
+				}
+
+			}
+			//Falta hacer la logica correcta
+			if (es_movimiento_derecha_arriba)
+			{
+				for (short i = fila_destino - 1; i < fila_origen; i++)
+				{
+					for (short y = columna_origen + 1; y < columna_destino; y++)
+					{
+						if (mapa[i][y] >= 'A')
+						{
+							cout << "Estas pasando por encima de una pieza" << endl;
+							return false;
+						}
+					}
+				}
+				if (mapa[fila_destino][fila_destino] >= 'a' || mapa[fila_destino][fila_destino] == SIN_NADA)
+				{
+					cout << "Ficha puesta" << endl;
+					return true;
+				}
+			}
+
+
 			else
 			{
 				return true;
 			}
 		}
-		else 
+		else
 		{
 			return true;
 		}
 		return true;
 	}
 
-	
+
 
 }
 
 bool movimiento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	//Verificamos que no pone unos numeros fuera del tablero
-	if (fila_origen < 0 || fila_origen >= NUM_FILAS || columna_origen < 0 || columna_origen >= NUM_COLUMNAS || fila_destino < 0 
+	if (fila_origen < 0 || fila_origen >= NUM_FILAS || columna_origen < 0 || columna_origen >= NUM_COLUMNAS || fila_destino < 0
 		|| fila_destino >= NUM_FILAS || columna_destino < 0 || columna_destino >= NUM_COLUMNAS)
 	{
 		system("cls");
