@@ -252,6 +252,123 @@ bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, s
 
 }
 
+
+bool logica_reina(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+	
+	bool es_turno_blancas = (turno == "blancas");
+	bool reina_correcto = false;
+
+	//Movimientos diagonales
+	bool es_movimiento_iquierda_arriba = (fila_origen - fila_destino == columna_origen - columna_destino && fila_destino < fila_origen && columna_destino < columna_origen);
+	bool es_movimiento_derecha_arriba = (fila_origen - fila_destino == columna_destino - columna_origen && fila_destino < fila_origen && columna_destino > columna_origen);
+	bool es_movimiento_iquierda_abajo = (fila_destino - fila_origen == columna_origen - columna_destino && fila_destino > fila_origen && columna_destino < columna_origen);
+	bool es_movimiento_derecha_abajo = (fila_destino - fila_origen == columna_destino - columna_origen && fila_destino > fila_origen && columna_destino > columna_origen);
+
+	//Movimientos rectos
+	bool es_movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
+	bool es_movimiento_lateral = (fila_origen == fila_destino && columna_origen != columna_destino);
+	//Tipo del movimiento rectos
+	bool tipo_movimiento_vertical = (fila_destino < fila_origen);
+	bool tipo_movimineto_lateral = (columna_destino > columna_origen);
+
+
+	if (!es_movimiento_iquierda_arriba && !es_movimiento_derecha_arriba && !es_movimiento_iquierda_abajo && !es_movimiento_derecha_abajo && !es_movimiento_lateral && !es_movimiento_vertical)
+	{
+		cout << "La reina no puede hacer este movimiento." << endl;
+		return false;
+	}
+	else
+	{
+		//Verificamientos de los posibles movimientos en las direciones.
+		if (es_movimiento_derecha_abajo)
+		{
+			reina_correcto = verifica_derecha_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+		}
+		if (es_movimiento_iquierda_arriba)
+		{
+			reina_correcto = verifica_iquierda_arriba(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+
+		}
+		if (es_movimiento_derecha_arriba)
+		{
+			reina_correcto = verifica_derecha_arriba(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+
+		}
+		if (es_movimiento_iquierda_abajo)
+		{
+			reina_correcto = verifica_iquierda_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+		}
+	}
+
+	if (es_turno_blancas)
+	{
+		if (es_movimiento_vertical)
+		{
+			//arriba
+			if (tipo_movimiento_vertical)
+			{
+				reina_correcto = verifica_movimiento_vertical_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+
+			}
+			else //Abajo 
+			{
+				reina_correcto = verifica_movimiento_vertical_B_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+		}
+		//Lateral
+		else
+		{
+			if (tipo_movimineto_lateral)
+			{
+				reina_correcto = verifica_movimiento_Lateral_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+			//Izquierda
+			else
+			{
+				reina_correcto = verifica_movimiento_Lateral_B_izquierda(fila_origen, columna_origen, fila_destino, columna_destino, mapa); 
+			}
+		}
+
+	}
+	//Negras
+	else
+	{
+		if (es_movimiento_vertical)
+		{
+			if (tipo_movimiento_vertical)
+			{
+				reina_correcto = verifica_movimiento_vertical_N(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+			else
+			{
+				reina_correcto = verifica_movimiento_vertical_N_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+		}
+		else
+		{
+			if (tipo_movimineto_lateral)
+			{
+				reina_correcto = verifica_movimiento_Lateral_N(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+			else
+			{
+				reina_correcto = verifica_movimiento_Lateral_N_izquierda(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+		}
+	}
+
+
+	if (!reina_correcto)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+
+}
+
 bool movimiento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	//Verificamos que no pone unos numeros fuera del tablero
@@ -306,6 +423,9 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 		case 'b':
 			resultado = logica_alfil(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 			break;
+		case 'Q':
+		case 'q':
+			resultado = logica_reina(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 		}
 
 		if (resultado)
@@ -406,6 +526,10 @@ bool posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 }
 
+bool jaque_al_rei() {
+
+	return false;
+}
 
 bool jaque_mate() {
 
