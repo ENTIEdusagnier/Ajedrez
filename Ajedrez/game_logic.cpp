@@ -281,19 +281,19 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 
 	bool es_turno_blancas = (turno == "blancas");
 
+	//Verifica si los movimientos verticales y inferiores del caballo es hacia la derecha o izquierda
 	bool es_movimiento_vertical_derecha = ((fila_origen - fila_destino == 2) && (columna_destino - columna_origen == 1));
 	bool es_movimiento_vertical_izquierda = ((fila_origen - fila_destino == 2) && (columna_origen - columna_destino == 1));
-
 	bool es_movimineto_inferior_derecha = ((fila_destino - fila_origen == 2) && (columna_destino - columna_origen == 1));
 	bool es_movimineto_inferior_izquierda = ((fila_destino - fila_origen == 2) && (columna_origen - columna_destino == 1));
-
+	
+	//Verifica los movimientos hacia un lado y luego arriba o abajo
 	bool es_movimiento_derecha_arriba = ((fila_origen - fila_destino == 1) && (columna_destino - columna_origen == 2));
 	bool es_movimiento_derecha_abajo = ((fila_destino - fila_origen == 1) && (columna_destino - columna_origen == 2));
-
 	bool es_movimiento_izquierda_arriba = ((fila_origen - fila_destino == 1) && (columna_origen - columna_destino == 2));
 	bool es_movimiento_izquierda_abajo = ((fila_destino - fila_origen == 1) && (columna_origen - columna_destino == 2));
 
-
+	//Si ninguno es true significa que el usuario ha puesto un numero unas cordenadas que no funionan con la logica.
 	if (!es_movimiento_vertical_derecha && !es_movimiento_vertical_izquierda && !es_movimineto_inferior_derecha && !es_movimineto_inferior_izquierda
 		&& !es_movimiento_derecha_arriba && !es_movimiento_derecha_abajo && !es_movimiento_izquierda_arriba && !es_movimiento_izquierda_abajo)
 	{
@@ -302,7 +302,7 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 	}
 	else
 	{
-		if (turno == "blancas")
+		if (es_turno_blancas)
 		{
 
 			if (mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
@@ -348,13 +348,19 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 }
 
 bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+	
+	bool es_turno_blancas = (turno == "blancas");
+	
+	//Mira si el movimiento es hacia arriba la izquierda y verifica si es en diagonal
+	bool es_movimiento_iquierda_arriba = (fila_origen - fila_destino == columna_origen - columna_destino && fila_destino < fila_origen && columna_destino < columna_origen);
+	//Mira si el movimiento es hacia arriba la derecha y verifica si es en diagonal
+	bool es_movimiento_derecha_arriba = (fila_origen - fila_destino == columna_destino - columna_origen && fila_destino < fila_origen && columna_destino > columna_origen); 
+	//Mira si el movimiento es hacia abajo la izquierda y verifica si es en diagonal
+	bool es_movimiento_iquierda_abajo = (fila_destino - fila_origen == columna_origen - columna_destino && fila_destino > fila_origen && columna_destino < columna_origen);
+	//Mira si el movimiento es hacia abajo la derecha y verifica si es en diagonal
+	bool es_movimiento_derecha_abajo = (fila_destino - fila_origen == columna_destino - columna_origen && fila_destino > fila_origen && columna_destino > columna_origen);
 
-	bool es_movimiento_iquierda_arriba = (fila_origen - fila_destino == columna_origen - columna_destino);
-	bool es_movimiento_derecha_arriba = (fila_origen - fila_destino == columna_destino - columna_origen);
-
-	bool es_movimiento_iquierda_abajo = (fila_destino - fila_origen == columna_origen - columna_destino);
-	bool es_movimiento_derecha_abajo = (fila_destino - fila_origen == columna_origen - columna_destino);
-
+	//Si no esta bien el movimiento dara error y retorna false.
 	if (!es_movimiento_iquierda_arriba && !es_movimiento_derecha_arriba && !es_movimiento_iquierda_abajo && !es_movimiento_derecha_abajo)
 	{
 		cout << "El alfil no puede hacer este movimiento." << endl; 
@@ -362,6 +368,33 @@ bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, s
 	}
 	else
 	{
+
+		if (es_turno_blancas)
+		{
+			if (es_movimiento_derecha_abajo)
+			{
+				for (short i = fila_origen + 1; i < fila_destino; i++)
+				{
+					for (short y = columna_origen + 1; y < columna_destino; y++)
+					{
+						if (mapa[i][y] >= 'A')
+						{
+							cout << "Estas pasando por encima de una pieza" << endl;
+							return false;
+						}
+					}
+
+				}
+			}
+			else
+			{
+				return true;
+			}
+		}
+		else 
+		{
+			return true;
+		}
 		return true;
 	}
 
