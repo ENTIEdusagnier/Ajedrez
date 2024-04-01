@@ -2,6 +2,7 @@
 #include <windows.h>
 #include "mapa.h"
 #include "movimientos_peon.h"
+#include "logica_torre.h"
 
 #define SIN_NADA '*'
 #define ESPACIO ' '
@@ -42,15 +43,15 @@ bool logica_peon(short fila_origen, short columna_origen, short fila_destino, sh
 bool logica_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	bool es_turno_blancas = (turno == "blancas");
+
 	bool es_movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
 	bool es_movimiento_lateral = (fila_origen == fila_destino && columna_origen != columna_destino);
 
 	//Me indica el la direcion veritcal (arriba o abajo) la qual quiere que se mueva la torre. Para poder hacer diferentes if's.
 	bool tipo_movimiento_vertical = (fila_destino < fila_origen); //Arriba (Blancas) Abajo (Negras)
-
 	bool tipo_movimineto_lateral = (columna_destino > columna_origen); //Derecha (Blancas) Izquierda (Negras)
 
-	bool pieza_por_el_medio = false;
+	bool torre_correcta = false;
 
 	if (!es_movimiento_lateral && !es_movimiento_vertical)
 	{
@@ -64,105 +65,23 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 		{
 			if (tipo_movimiento_vertical) //arriba
 			{
-				for (short i = fila_destino; i < fila_origen; i++)
-				{
-					if (mapa[i][columna_origen] <= 'Z' && mapa[i][columna_origen] >= 'A' || mapa[i + 1][columna_origen] >= 'a') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-				}
-				if (mapa[fila_destino][columna_destino] >= 'a' && !pieza_por_el_medio)
-				{
-					cout << "Pieza comida" << endl;
-					return true;
-				}
-				if (pieza_por_el_medio)
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
+				torre_correcta = verifica_movimiento_vertical_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 
 			}
-			else
+			else //Abajo 
 			{
-				for (short i = fila_origen + 1; i <= fila_destino; i++)
-				{
-					if (mapa[i][columna_origen] <= 'Z' && mapa[i][columna_origen] >= 'A' || mapa[i - 1][columna_origen] >= 'a') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-					if (mapa[fila_destino][columna_destino] >= 'a' && !pieza_por_el_medio)
-					{
-						cout << "Pieza comida" << endl;
-						return true;
-					}
-					if (pieza_por_el_medio)
-					{
-						return false;
-					}
-					else
-					{
-						return true;
-					}
-				}
+				torre_correcta = verifica_movimiento_vertical_B_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			}
 		}
-		else
+		else //Lateral
 		{
 			if (tipo_movimineto_lateral) //Derecha
 			{
-				for (short i = columna_origen + 1; i <= columna_destino; i++)
-				{
-					if (mapa[fila_origen][i] <= 'Z' && mapa[fila_origen][i] >= 'A' || mapa[fila_origen][i - 1] >= 'a') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-				}
-				if (mapa[fila_destino][columna_destino] >= 'a' && !pieza_por_el_medio)
-				{
-					cout << "Pieza comida" << endl;
-					return true;
-				}
-				if (pieza_por_el_medio)
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-
+				torre_correcta = verifica_movimiento_Lateral_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			}
-			else
+			else //Izquierda
 			{
-				for (short i = columna_destino; i < columna_origen; i++)
-				{
-					if (mapa[fila_origen][i] <= 'Z' && mapa[fila_origen][i] >= 'A' || mapa[fila_origen][i + 1] >= 'a') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-				}
-				if (mapa[fila_destino][columna_destino] >= 'a' && !pieza_por_el_medio)
-				{
-					cout << "Pieza comida" << endl;
-					return true;
-				}
-				if (pieza_por_el_medio)
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-
+				torre_correcta = verifica_movimiento_Lateral_B_izquierda(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			}
 		}
 
@@ -173,110 +92,38 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 		{
 			if (tipo_movimiento_vertical) // Abajo
 			{
-				for (short i = fila_origen + 1; i <= fila_destino; i++)
-				{
-					if (mapa[i][columna_origen] <= 'z' && mapa[i][columna_origen] >= 'a' || mapa[i - 1][columna_origen] >= 'A') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-				}
-				if (mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z' && !pieza_por_el_medio)
-				{
-					cout << "Pieza comida" << endl;
-					return true;
-				}
-				if (pieza_por_el_medio)
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-
+				torre_correcta = verifica_movimiento_vertical_N(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			}
 			else
 			{
-				for (short i = fila_destino; i < fila_origen; i++)
-				{
-					if (mapa[i][columna_origen] <= 'z' && mapa[i][columna_origen] >= 'a' || mapa[i + 1][columna_origen] >= 'A') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-					if (mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z' && !pieza_por_el_medio)
-					{
-						cout << "Pieza comida" << endl;
-						return true;
-					}
-					if (pieza_por_el_medio)
-					{
-						return false;
-					}
-					else
-					{
-						return true;
-					}
-				}
+				torre_correcta = verifica_movimiento_vertical_N_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			}
 		}
 		else
 		{
 			if (tipo_movimineto_lateral) //Izquierda
 			{
-				for (short i = columna_destino; i < columna_origen; i++)
-				{
-					if (mapa[fila_origen][i] <= 'z' && mapa[fila_origen][i] >= 'a' || mapa[fila_origen][i + 1] >= 'A') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-				}
-				if (mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z' && !pieza_por_el_medio)
-				{
-					cout << "Pieza comida" << endl;
-					return true;
-				}
-				if (pieza_por_el_medio)
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-
+				torre_correcta = verifica_movimiento_Lateral_N(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			}
 			else
 			{
-				for (short i = columna_origen + 1; i <= columna_destino; i++)
-				{
-					if (mapa[fila_origen][i] <= 'Z' && mapa[fila_origen][i] >= 'A' || mapa[fila_origen][i - 1] >= 'a') {
-						system("cls");
-						cout << "Estas pasando por encima de una pieza" << endl;
-						pieza_por_el_medio = true;
-					}
-				}
-				if (mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z' && !pieza_por_el_medio)
-				{
-					cout << "Pieza comida" << endl;
-					return true;
-				}
-				if (pieza_por_el_medio)
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-
+				torre_correcta = verifica_movimiento_Lateral_N_izquierda(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			}
 		}
 	}
 
+	if (!torre_correcta)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+
 }
+
+
 bool logica_horse(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	bool es_turno_blancas = (turno == "blancas");
@@ -414,9 +261,9 @@ bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, s
 			//Falta hacer la logica correcta
 			if (es_movimiento_derecha_arriba)
 			{
-				for (short i = fila_destino - 1; i < fila_origen; i++)
+				for (short i = fila_destino + 1; i < fila_origen; i++)
 				{
-					for (short y = columna_origen + 1; y < columna_destino; y++)
+					for (short y = columna_destino + 1; y < columna_origen; y++)
 					{
 						if (mapa[i][y] >= 'A')
 						{
