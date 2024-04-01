@@ -220,7 +220,7 @@ bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, s
 	}
 	else
 	{
-		//Verificamientos de los posibles movimientos.
+		//Verificamientos de los posibles movimientos en las direciones.
 		if (es_movimiento_derecha_abajo)
 		{
 			alfil_correcto = verifica_derecha_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
