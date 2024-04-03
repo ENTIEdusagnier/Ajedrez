@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="juego.cpp" />
+    <ClCompile Include="logica_horse.cpp" />
     <ClCompile Include="mapa.cpp" />
     <ClCompile Include="movimientos_peon.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="game_logic.h" />
     <ClInclude Include="General.h" />
     <ClInclude Include="logica_alfil.h" />
+    <ClInclude Include="logica_horse.h" />
     <ClInclude Include="logica_torre.h" />
     <ClInclude Include="movimientos_peon.h" />
     <ClInclude Include="juego.h" />

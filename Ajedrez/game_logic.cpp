@@ -116,6 +116,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 bool logica_horse(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	bool es_turno_blancas = (turno == "blancas");
+	bool caballo_correcto = false;
 
 	//Verifica si los movimientos verticales y inferiores del caballo es hacia la derecha o izquierda
 	bool es_movimiento_vertical_derecha = ((fila_origen - fila_destino == 2) && (columna_destino - columna_origen == 1));
@@ -140,44 +141,23 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 	{
 		if (es_turno_blancas)
 		{
-
-			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
-			{
-				system("cls");
-				cout << "Estas intentando colocar el caballo en una pieza propia" << endl;
-				return false;
-			}
-			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N)
-			{
-				cout << "Caballo mata." << endl;
-				return true;
-			}
-			if (mapa[fila_destino][columna_destino] == SIN_NADA)
-			{
-				return true;
-			}
+			caballo_correcto = verificar_horse_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			
 		}
 		else
 		{
-			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N && mapa[fila_destino][columna_destino] <= CHAR_FIN_N)
-			{
-				system("cls");
-				cout << "Estas intentando colocar el caballo en una pieza propia" << endl;
-				return false;
-			}
-			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
-			{
-				cout << "Caballo mata." << endl;
-				return true;
-			}
-			if (mapa[fila_destino][columna_destino] == SIN_NADA)
-			{
-				return true;
-			}
+			caballo_correcto = verificar_horse_N(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 		}
 	}
 
-
+	if (!caballo_correcto)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 
 
 
@@ -355,9 +335,24 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 
 bool logica_rey(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
+	
 
 
 
+	return true;
+
+
+
+}
+
+bool jaque_mate() {
+
+
+
+
+
+
+	return false;
 
 }
 
@@ -527,13 +522,4 @@ bool jaque_al_rei() {
 	return false;
 }
 
-bool jaque_mate() {
 
-
-
-
-
-
-	return false;
-
-}
