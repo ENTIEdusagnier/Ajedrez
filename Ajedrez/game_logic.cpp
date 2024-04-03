@@ -353,6 +353,14 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 
 }
 
+bool logica_rey(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+
+
+
+
+
+}
+
 bool movimiento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	//Verificamos que no pone unos numeros fuera del tablero
@@ -410,6 +418,10 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 		case 'Q':
 		case 'q':
 			resultado = logica_reina(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+			break;
+		case 'K':
+		case 'k':
+			resultado = logica_rey(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 		}
 
 		if (resultado)
