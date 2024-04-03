@@ -1,12 +1,5 @@
-#include <iostream>
-#include <windows.h>
+#include "General.h"
 
-#define SIN_NADA '*'
-
-#define NUM_FILAS 9
-#define NUM_COLUMNAS 9
-
-using namespace std;
 
 bool verifica_derecha_abajo(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
@@ -15,13 +8,13 @@ bool verifica_derecha_abajo(short fila_origen, short columna_origen, short fila_
 
 	for (short fila = fila_origen + 1, columna = columna_origen + 1; fila < fila_destino && columna < columna_destino; fila++, columna++)
 	{
-		if (mapa[fila][columna] >= 'A') {
+		if (mapa[fila][columna] >= CHAR_EMPIEZA_B) {
 			cout << "Estas pasando por encima de una pieza" << endl;
 			return false;
 		}
 	}
-	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= 'a')
-		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
+	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
+		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 		|| mapa[fila_destino][fila_destino] == SIN_NADA) {
 
 		cout << "Ficha puesta" << endl;
@@ -34,15 +27,15 @@ bool verifica_iquierda_arriba(short fila_origen, short columna_origen, short fil
 
 	for (short fila = fila_destino + 1, columna = columna_destino + 1; fila < fila_origen && columna < columna_origen; fila++, columna++)
 	{
-		if (mapa[fila][columna] >= 'A')
+		if (mapa[fila][columna] >= CHAR_EMPIEZA_B)
 		{
 			cout << "Estas pasando por encima de una pieza" << endl;
 			return false;
 		}
 
 	}
-	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= 'a')
-		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
+	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
+		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 		|| mapa[fila_destino][fila_destino] == SIN_NADA) {
 
 		cout << "Ficha puesta" << endl;
@@ -54,14 +47,14 @@ bool verifica_derecha_arriba(short fila_origen, short columna_origen, short fila
 
 	for (short fila = fila_origen - 1, columna = columna_origen + 1; fila > fila_destino && columna < columna_destino; fila--, columna++)
 	{
-		if (mapa[fila][columna] >= 'A')
+		if (mapa[fila][columna] >= CHAR_EMPIEZA_B)
 		{
 			cout << "Estas pasando por encima de una pieza" << endl;
 			return false;
 		}
 	}
-	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= 'a')
-		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
+	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
+		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 		|| mapa[fila_destino][fila_destino] == SIN_NADA) {
 
 		cout << "Ficha puesta" << endl;
@@ -76,15 +69,15 @@ bool verifica_iquierda_abajo(short fila_origen, short columna_origen, short fila
 	{
 
 
-		if (mapa[fila][columna] >= 'A')
+		if (mapa[fila][columna] >= CHAR_EMPIEZA_B)
 		{
 			cout << "Estas pasando por encima de una pieza" << endl;
 			return false;
 		}
 
 	}
-	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= 'a')
-		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
+	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
+		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 		|| mapa[fila_destino][fila_destino] == SIN_NADA) {
 
 		cout << "Ficha puesta" << endl;

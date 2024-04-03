@@ -1,8 +1,4 @@
-#include <iostream>
-#include "juego.h"
-
-//Permite no utilizar std::
-using namespace std;
+#include "General.h"
 
 
 void main() {

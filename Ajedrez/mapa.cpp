@@ -1,11 +1,5 @@
-#define NUM_FILAS 9
-#define NUM_COLUMNAS 9
+#include "General.h"
 
-#define SIN_NADA '*'
-#define ESPACIO ' '
-#include <iostream>
-
-using namespace std;
 
 void crear_tabla(char mapa[NUM_FILAS][NUM_COLUMNAS]) {
 

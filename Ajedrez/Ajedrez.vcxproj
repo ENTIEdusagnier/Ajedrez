@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_logic.h" />
+    <ClInclude Include="General.h" />
     <ClInclude Include="logica_alfil.h" />
     <ClInclude Include="logica_torre.h" />
     <ClInclude Include="movimientos_peon.h" />

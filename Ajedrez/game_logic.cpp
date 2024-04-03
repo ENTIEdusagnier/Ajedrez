@@ -1,20 +1,4 @@
-#include <iostream>
-#include <windows.h>
-#include "mapa.h"
-#include "movimientos_peon.h"
-#include "logica_torre.h"
-#include "logica_alfil.h"
-
-#define SIN_NADA '*'
-#define ESPACIO ' '
-
-#define NUM_FILAS 9
-#define NUM_COLUMNAS 9
-#define REINA_BLANCA 'Q'
-#define REINA_NEGRA 'q'
-
-using namespace std;
-
+#include "General.h"
 
 bool logica_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
@@ -157,13 +141,13 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 		if (es_turno_blancas)
 		{
 
-			if (mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 			{
 				system("cls");
 				cout << "Estas intentando colocar el caballo en una pieza propia" << endl;
 				return false;
 			}
-			if (mapa[fila_destino][columna_destino] >= 'a')
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N)
 			{
 				cout << "Caballo mata." << endl;
 				return true;
@@ -175,13 +159,13 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 		}
 		else
 		{
-			if (mapa[fila_destino][columna_destino] >= 'a' && mapa[fila_destino][columna_destino] <= 'z')
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N && mapa[fila_destino][columna_destino] <= CHAR_FIN_N)
 			{
 				system("cls");
 				cout << "Estas intentando colocar el caballo en una pieza propia" << endl;
 				return false;
 			}
-			if (mapa[fila_destino][columna_destino] >= 'A' && mapa[fila_destino][columna_destino] <= 'Z')
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 			{
 				cout << "Caballo mata." << endl;
 				return true;
@@ -379,7 +363,7 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 		cout << "Posicion insertada no esta dentro del tablero" << endl;
 		return false;
 	}
-	//Verificamos que no ponga una posición donde no hay ficha
+	//Verificamos que no ponga una posici n donde no hay ficha
 	if (mapa[fila_origen][columna_origen] == SIN_NADA)
 	{
 		system("cls");
@@ -387,14 +371,14 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 		return false;
 	}
 	//Verificamos que si esta el turno de las blancas (Mayusculas) no intente mover una ficha del jugador de negras (minusculas)
-	if (turno == "blancas" && mapa[fila_origen][columna_origen] >= 'a' && mapa[fila_origen][columna_origen] <= 'z')
+	if (turno == "blancas" && mapa[fila_origen][columna_origen] >= CHAR_EMPIEZA_N && mapa[fila_origen][columna_origen] <= CHAR_FIN_N)
 	{
 		system("cls");
 		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
 		return false;
 	}
 	//Verificamos lo mismo con el jugador de las negras.
-	if (turno == "negras" && mapa[fila_origen][columna_origen] >= 'A' && mapa[fila_origen][columna_origen] <= 'Z')
+	if (turno == "negras" && mapa[fila_origen][columna_origen] >= CHAR_EMPIEZA_B && mapa[fila_origen][columna_origen] <= CHAR_FIN_B)
 	{
 		system("cls");
 		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
@@ -532,6 +516,11 @@ bool jaque_al_rei() {
 }
 
 bool jaque_mate() {
+
+
+
+
+
 
 	return false;
 

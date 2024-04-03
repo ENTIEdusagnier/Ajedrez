@@ -1,16 +1,6 @@
-#include <iostream>
-#include <windows.h>
+#include "General.h"
 
 
-#define SIN_NADA '*'
-#define ESPACIO ' '
-
-#define NUM_FILAS 9
-#define NUM_COLUMNAS 9
-
-
-
-using namespace std;
 
 bool verifica_movimiento(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
@@ -92,8 +82,8 @@ bool verifica_movimiento_lateral(short fila_origen, short columna_origen, short 
 		return false;
 	}
 
-	if (mapa[fila_destino][columna_destino] != SIN_NADA && ((turno == "blancas" && mapa[fila_destino][columna_destino] >= 'a') ||
-		(turno == "negras" && mapa[fila_destino][columna_destino] <= 'Z'))) {
+	if (mapa[fila_destino][columna_destino] != SIN_NADA && ((turno == "blancas" && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N) ||
+		(turno == "negras" && mapa[fila_destino][columna_destino] <= CHAR_FIN_B))) {
 		// El peon mata una ficha del oponente
 		cout << "El peon mata." << endl;
 		return true;
@@ -107,6 +97,7 @@ bool verifica_movimiento_lateral(short fila_origen, short columna_origen, short 
 }
 
 bool peon_a_reina(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+
 
 	if (mapa[fila_origen][columna_origen] == 'P' || mapa[fila_origen][columna_origen] == 'p')
 	{
