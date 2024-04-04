@@ -12,6 +12,9 @@ void juego() {
 	crear_tabla(mapa);
 	poner_piezas(mapa);
 
+	//Este cout esta sacado de aqui https://gist.github.com/vivia11/fd4d8ef84b65a9ac7d0df132363beb6d
+	cout << "   _____ _    _ ______  _____ _____ \n  / ____| |  | |  ____|/ ____/ ____| \n | |    | |__| | |__  | (___| (___  \n | |    |  __  |  __|  \\___  \\___ \\ \n | |____| |  | | |____ ____) |___) | \n  \\_____|_|  |_|______|_____/_____/ \n" << endl;
+
 	while (juego_activo)
 	{
 		cout << "El turno es de: " << turno << endl;

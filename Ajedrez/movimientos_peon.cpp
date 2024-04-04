@@ -29,7 +29,7 @@ bool verifica_movimiento(short fila_origen, short columna_origen, short fila_des
 			}
 		}
 
-		for (short i = fila_destino; i < fila_origen ; i++) {
+		for (short i = fila_destino; i < fila_origen; i++) {
 
 			if (mapa[i][columna_origen] != SIN_NADA) {
 				system("cls");
@@ -39,7 +39,7 @@ bool verifica_movimiento(short fila_origen, short columna_origen, short fila_des
 		}
 
 	}
-	else if (!es_turno_blancas)
+	else
 	{
 		if (es_fila_inicial_negras) {
 			//Verifica que el movimiento vertical del peon es correcto.
@@ -67,33 +67,59 @@ bool verifica_movimiento(short fila_origen, short columna_origen, short fila_des
 			}
 		}
 	}
-	else
-	{
-		return true;
-	}
+
 
 }
 bool verifica_movimiento_lateral(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	if (turno == "blancas" && ((fila_destino != fila_origen + 1 && fila_destino != fila_origen - 1)
-		|| (columna_destino != columna_origen + 1 && columna_destino != columna_origen - 1))) {
-		system("cls");
-		cout << "El movimiento no lateral no puede exceder 1" << endl;
-		return false;
+	bool turno_blancas = (turno == "blancas");
+
+	if (turno_blancas)
+	{
+		if ((fila_destino != fila_origen + 1 && fila_destino != fila_origen - 1)
+			|| (columna_destino != columna_origen + 1 && columna_destino != columna_origen - 1)) {
+			system("cls");
+			cout << "El movimiento no lateral no puede exceder 1" << endl;
+			return false;
+		}
+		if (mapa[fila_destino][columna_destino] != SIN_NADA && (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N)) {
+			// El peon mata una ficha del oponente
+			cout << "El peon mata." << endl;
+			return true;
+		}
+		else
+		{
+			system("cls");
+			// El peon pasa de largo sin capturar una ficha
+			cout << "El peon pasa de largo y por encima de otra ficha." << endl;
+			return false;
+		}
+	}
+	else
+	{
+		if  ((fila_destino != fila_origen + 1 && fila_destino != fila_origen - 1)
+			|| (columna_destino != columna_origen + 1 && columna_destino != columna_origen - 1)) {
+			system("cls");
+			cout << "El movimiento no lateral no puede exceder 1" << endl;
+			return false;
+		}
+		if (mapa[fila_destino][columna_destino] != SIN_NADA && (mapa[fila_destino][columna_destino] <= CHAR_FIN_B && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B)) {
+			// El peon mata una ficha del oponente
+			cout << "El peon mata." << endl;
+			return true;
+		}
+		else
+		{
+			system("cls");
+			// El peon pasa de largo sin capturar una ficha
+			cout << "El peon pasa de largo y por encima de otra ficha." << endl;
+			return false;
+		}
 	}
 
-	if (mapa[fila_destino][columna_destino] != SIN_NADA && ((turno == "blancas" && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N) ||
-		(turno == "negras" && mapa[fila_destino][columna_destino] <= CHAR_FIN_B))) {
-		// El peon mata una ficha del oponente
-		cout << "El peon mata." << endl;
-		return true;
-	}
-	else {
-		system("cls");
-		// El peon pasa de largo sin capturar una ficha
-		cout << "El peon pasa de largo y por encima de otra ficha." << endl;
-		return false;
-	}
+
+
+	
 }
 
 bool peon_a_reina(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
@@ -113,5 +139,19 @@ bool peon_a_reina(short fila_origen, short columna_origen, short fila_destino, s
 	{
 		return false;
 	}
+
+}
+
+bool verifica_jaque_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+
+	if (verifica_movimiento_lateral(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
 
 }

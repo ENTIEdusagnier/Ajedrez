@@ -16,6 +16,8 @@
 #define SIN_NADA '*'
 #define ESPACIO ' '
 
+#define REY_BLANCO 'K'
+
 #include <windows.h>// Para hacer un Sleep para poder dejar un tiempo y borrar la terminal. (Sacado de mi proyecto hundir la flota).
 #include <iostream>
 

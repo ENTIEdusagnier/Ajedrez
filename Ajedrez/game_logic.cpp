@@ -142,7 +142,7 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 		if (es_turno_blancas)
 		{
 			caballo_correcto = verificar_horse_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
-			
+
 		}
 		else
 		{
@@ -163,7 +163,7 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 
 }
 
-bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) { 
+bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	//Mira si el movimiento es hacia arriba la izquierda y verifica si es en diagonal
 	bool es_movimiento_iquierda_arriba = (fila_origen - fila_destino == columna_origen - columna_destino && fila_destino < fila_origen && columna_destino < columna_origen);
@@ -218,7 +218,7 @@ bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, s
 
 
 bool logica_reina(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
-	
+
 	bool es_turno_blancas = (turno == "blancas");
 	bool reina_correcto = false;
 
@@ -289,7 +289,7 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 			//Izquierda
 			else
 			{
-				reina_correcto = verifica_movimiento_Lateral_B_izquierda(fila_origen, columna_origen, fila_destino, columna_destino, mapa); 
+				reina_correcto = verifica_movimiento_Lateral_B_izquierda(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			}
 		}
 
@@ -335,15 +335,71 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 
 bool logica_rey(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	
+
 
 
 
 	return true;
 
 
-
 }
+
+bool jaque_al_rei(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+
+	bool turno_blancas = (turno == "blancas");
+	bool resultado = false;
+
+	short fila_origen, columna_origen, fila_destino, columna_destino;
+
+
+	if (!turno_blancas)
+	{
+		for (int i = 0; i < NUM_FILAS; i++) {
+			for (int j = 0; j < NUM_COLUMNAS; j++) {
+
+				if (mapa[i][j] == REY_BLANCO) {
+
+					fila_destino = i;
+					columna_destino = j;
+				}
+
+			}
+		}
+
+		for (int i = 0; i < NUM_FILAS; i++) {
+			for (int j = 0; j < NUM_COLUMNAS; j++) {
+
+				if (mapa[i][j] >= CHAR_EMPIEZA_N && mapa[i][j] <= CHAR_FIN_N) {
+
+					char pieza_oponente = mapa[i][j];
+
+					fila_origen = i;
+					columna_origen = j;
+
+					switch (pieza_oponente)
+					{
+
+					case 'p':
+						resultado = verifica_jaque_peon(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+						break;
+					}
+
+				}
+
+			}
+		}
+	}
+
+	if (resultado)
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
 
 bool jaque_mate() {
 
@@ -387,7 +443,11 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
 		return false;
 	}
-	//Verifico que el peon (sea el turno de quien sea) se mueva hacia arriba 1 o 2 cuadrados solo, y no se mueva por las columnas es decir lateralmente.
+	if (jaque_al_rei(mapa, turno))
+	{
+		cout << "No puedes mover porque estas en Jaque" << endl;
+		return false;
+	}
 
 	else
 	{
@@ -515,11 +575,6 @@ bool posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 		}
 	}
 
-}
-
-bool jaque_al_rei() {
-
-	return false;
 }
 
 
