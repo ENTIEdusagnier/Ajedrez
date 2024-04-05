@@ -144,8 +144,11 @@ bool peon_a_reina(short fila_origen, short columna_origen, short fila_destino, s
 
 bool verifica_jaque_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	if (verifica_movimiento_lateral(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno))
+	string turno_verificacion = cambiar_turno_jaque(turno);
+
+	if (verifica_movimiento_lateral(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno_verificacion))
 	{
+		cout << "Estas en Jaque" << endl;
 		return true;
 	}
 	else

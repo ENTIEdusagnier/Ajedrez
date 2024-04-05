@@ -352,7 +352,7 @@ bool jaque_al_rei(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 	short fila_origen, columna_origen, fila_destino, columna_destino;
 
 
-	if (!turno_blancas)
+	if (turno_blancas)
 	{
 		for (int i = 0; i < NUM_FILAS; i++) {
 			for (int j = 0; j < NUM_COLUMNAS; j++) {
@@ -398,6 +398,7 @@ bool jaque_al_rei(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 		return false;
 	}
 }
+
 
 
 
@@ -523,6 +524,18 @@ void mover_ficha(short fila_origen, short columna_origen, short fila_destino, sh
 }
 
 string cambiar_turno(string turno) {
+
+	if (turno == "blancas")
+	{
+		return "negras";
+	}
+	else
+	{
+		return "blancas";
+	}
+}
+
+string cambiar_turno_jaque(string turno) {
 
 	if (turno == "blancas")
 	{

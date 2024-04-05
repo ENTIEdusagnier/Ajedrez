@@ -9,5 +9,6 @@ void mover_ficha(short fila_origen, short columna_origen, short fila_destino, sh
 bool posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno);
 
 string cambiar_turno(string turno);
+string cambiar_turno_jaque(string turno);
 
 bool jaque_mate();
