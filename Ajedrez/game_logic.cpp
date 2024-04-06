@@ -1,5 +1,14 @@
 #include "General.h"
 
+bool rey_movido_enroque_B = false;
+bool rey_movido_enroque_N = false;
+
+bool torre_izquierda_movida_B = false;
+bool torre_derecha_movida_B = false;
+
+bool torre_izquierda_movida_N = false;
+bool torre_derecha_movida_N = false;
+
 bool logica_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 
@@ -29,6 +38,19 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 
 	bool es_turno_blancas = (turno == "blancas");
 
+	const short fila_torre_izquierda_B = 8;
+	const short columna_torre_izquierda_B = 1;
+
+	const short fila_torre_derecha_B = 8;
+	const short columna_torre_derecha_B = 8;
+
+
+	const short fila_torre_izquierda_N = 1;
+	const short columna_torre_izquierda_N = 1;
+
+	const short fila_torre_derecha_N = 1;
+	const short columna_torre_derecha_N = 8;
+
 	bool es_movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
 	bool es_movimiento_lateral = (fila_origen == fila_destino && columna_origen != columna_destino);
 
@@ -53,6 +75,14 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 			{
 				torre_correcta = verifica_movimiento_vertical_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 
+				if (torre_correcta && fila_origen == fila_torre_izquierda_B && columna_origen == columna_torre_izquierda_B)
+				{
+					torre_izquierda_movida_B = true;
+				}
+				if (torre_correcta && fila_origen == fila_torre_derecha_B && columna_origen == columna_torre_derecha_B)
+				{
+					torre_derecha_movida_B = true;
+				}
 			}
 			else //Abajo 
 			{
@@ -65,11 +95,29 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 			if (tipo_movimineto_lateral)
 			{
 				torre_correcta = verifica_movimiento_Lateral_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+
+				if (torre_correcta && fila_origen == fila_torre_izquierda_B && columna_origen == columna_torre_izquierda_B)
+				{
+					torre_izquierda_movida_B = true;
+				}
+				if (torre_correcta && fila_origen == fila_torre_derecha_B && columna_origen == columna_torre_derecha_B)
+				{
+					torre_derecha_movida_B = true;
+				}
 			}
 			//Izquierda
 			else
 			{
 				torre_correcta = verifica_movimiento_Lateral_B_izquierda(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+
+				if (torre_correcta && fila_origen == fila_torre_izquierda_B && columna_origen == columna_torre_izquierda_B)
+				{
+					torre_izquierda_movida_B = true;
+				}
+				if (torre_correcta && fila_origen == fila_torre_derecha_B && columna_origen == columna_torre_derecha_B)
+				{
+					torre_derecha_movida_B = true;
+				}
 			}
 		}
 
@@ -333,33 +381,6 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 
 }
 
-bool logica_rey(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
-
-	bool turno_blancas = (turno == "blancas");
-
-	const short fila_posicion_inicial_B = 8;
-	const short columna_posicion_inicial_B = 5;
-
-	const short fila_posicion_inicial_B = 1;
-	const short columna_posicion_inicial_B = 5;
-
-	
-	bool movimiento_vertical = ((fila_origen - fila_destino == 1 || fila_destino -  fila_origen == 1) && columna_origen == columna_destino);
-	bool movimiento_lateral = ((columna_origen - columna_destino == 1 || columna_destino - columna_origen == 1)&& fila_origen == fila_destino);
-	bool es_enroque_izquerda = ((fila_origen - fila_destino == 1 || fila_destino - fila_origen == 1) && columna_origen == columna_destino);
-
-	if (!movimiento_vertical && !movimiento_lateral)
-	{
-		return false;
-	}
-
-
-
-	return true;
-
-
-}
-
 bool enroque_blancas(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	bool turno_blancas = (turno == "blancas");
@@ -413,6 +434,117 @@ bool enroque_blancas(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 		return false;
 	}
 }
+
+bool logica_rey(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+
+	bool turno_blancas = (turno == "blancas");
+
+
+	bool movimiento_vertical = ((fila_origen - fila_destino == 1 || fila_destino - fila_origen == 1) && columna_origen == columna_destino);
+	bool movimiento_lateral = ((columna_origen - columna_destino == 1 || columna_destino - columna_origen == 1) && fila_origen == fila_destino);
+	bool movimiento_diagonal = ((fila_origen - fila_destino == 1 || fila_destino - fila_origen == 1) && (columna_origen - columna_destino == 1 || columna_destino - columna_origen == 1));
+
+	bool es_enroque_derecha = (columna_destino - columna_origen == 2 && fila_origen == fila_destino);	
+	bool es_enroque_izquierda = (columna_origen - columna_destino == 2 && fila_origen == fila_destino);
+
+	if (!movimiento_vertical && !movimiento_lateral && !movimiento_diagonal && !es_enroque_derecha && !es_enroque_izquierda)
+	{
+		return false;
+	}
+
+	if (turno_blancas)
+	{
+		if (movimiento_vertical)
+		{
+			if (mapa[fila_destino][columna_destino] == SIN_NADA)
+			{
+				rey_movido_enroque_B = true;
+				return true;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
+			{
+				cout << "Estas pasando por encima de una pieza propia" << endl;
+				return false;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N && mapa[fila_destino][columna_destino] <= CHAR_FIN_N)
+			{
+				rey_movido_enroque_B = true;
+				cout << "Rey Mata" << endl;
+				return true;
+			}
+		}
+		if (movimiento_lateral)
+		{
+			if (mapa[fila_destino][columna_destino] == SIN_NADA)
+			{
+				rey_movido_enroque_B = true;
+				return true;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
+			{
+				cout << "Estas pasando por encima de una pieza propia" << endl;
+				return false;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N && mapa[fila_destino][columna_destino] <= CHAR_FIN_N)
+			{
+				rey_movido_enroque_B = true;
+				cout << "Rey Mata" << endl;
+				return true;
+			}
+		}
+		if (movimiento_diagonal)
+		{
+			if (mapa[fila_destino][columna_destino] == SIN_NADA)
+			{
+				rey_movido_enroque_B = true;
+				return true;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
+			{
+				cout << "Estas pasando por encima de una pieza propia" << endl;
+				return false;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N && mapa[fila_destino][columna_destino] <= CHAR_FIN_N)
+			{
+				rey_movido_enroque_B = true;
+				cout << "Rey Mata" << endl;
+				return true;
+			}
+		}
+
+		if (es_enroque_derecha && !rey_movido_enroque_B && !torre_derecha_movida_B) {
+
+			if (mapa[fila_destino][columna_destino] != SIN_NADA && mapa[fila_destino][columna_destino - 1] != SIN_NADA)
+			{
+				cout << " Estas intentando enrrocar con piezas por el medio" << endl;
+				return false;
+			}
+
+			bool verifica_enroque = enroque_blancas(mapa, turno);
+
+		}
+		if (es_enroque_izquierda && !rey_movido_enroque_B && !torre_izquierda_movida_B) {
+
+			if (mapa[fila_destino][columna_destino] != SIN_NADA && mapa[fila_destino][columna_origen - 1] != SIN_NADA)
+			{
+				cout << " Estas intentando enrrocar con piezas por el medio" << endl;
+				return false;
+			}
+
+			bool verifica_enroque = enroque_blancas(mapa, turno);
+
+		}
+
+	}
+
+
+
+	return true;
+
+
+}
+
+
 
 
 
