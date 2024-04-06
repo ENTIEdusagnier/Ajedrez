@@ -14,3 +14,5 @@ bool verifica_movimiento_vertical_N(short fila_origen, short columna_origen, sho
 bool verifica_movimiento_vertical_N_abajo(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]);
 bool verifica_movimiento_Lateral_N(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]);
 bool verifica_movimiento_Lateral_N_izquierda(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS]);
+
+bool verifica_todo_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno);

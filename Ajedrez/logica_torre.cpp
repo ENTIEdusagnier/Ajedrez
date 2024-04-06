@@ -233,5 +233,94 @@ bool verifica_movimiento_Lateral_N_izquierda(short fila_origen, short columna_or
 
 }
 
+bool verifica_todo_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+
+	bool turno_blancas = (turno == "blancas");
+	bool torre_correcta;
+
+	bool es_movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
+	bool es_movimiento_lateral = (fila_origen == fila_destino && columna_origen != columna_destino);
+
+	//Me indica el la direcion veritcal (arriba o abajo) la qual quiere que se mueva la torre. Para poder hacer diferentes if's.
+	bool tipo_movimiento_vertical = (fila_destino < fila_origen);
+	bool tipo_movimineto_lateral = (columna_destino > columna_origen);
+
+	if (!es_movimiento_lateral && !es_movimiento_vertical)
+	{
+		cout << "No puedes mover la torre en diagonal" << endl;
+		return false;
+	}
+
+	if (turno_blancas)
+	{
+		if (es_movimiento_vertical)
+		{
+			//arriba
+			if (tipo_movimiento_vertical)
+			{
+				torre_correcta = verifica_movimiento_vertical_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+
+			}
+			else //Abajo 
+			{
+				torre_correcta = verifica_movimiento_vertical_B_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+		}
+		//Lateral
+		else
+		{
+			if (tipo_movimineto_lateral)
+			{
+				torre_correcta = verifica_movimiento_Lateral_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+
+			}
+			//Izquierda
+			else
+			{
+				torre_correcta = verifica_movimiento_Lateral_B_izquierda(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+
+			}
+		}
+
+	}
+	//Negras
+	else
+	{
+		if (es_movimiento_vertical)
+		{
+			if (tipo_movimiento_vertical)
+			{
+				torre_correcta = verifica_movimiento_vertical_N(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+			else
+			{
+				torre_correcta = verifica_movimiento_vertical_N_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+		}
+		else
+		{
+			if (tipo_movimineto_lateral)
+			{
+				torre_correcta = verifica_movimiento_Lateral_N(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+			else
+			{
+				torre_correcta = verifica_movimiento_Lateral_N_izquierda(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
+			}
+		}
+	}
+
+	if (torre_correcta)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
+
+
 
 

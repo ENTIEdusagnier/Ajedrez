@@ -142,3 +142,27 @@ bool peon_a_reina(short fila_origen, short columna_origen, short fila_destino, s
 
 }
 
+bool verifica_todo_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+
+	bool resultado;
+
+	bool movimiento_lateral = (columna_origen != columna_destino);
+
+	if (movimiento_lateral) {
+		resultado = verifica_movimiento_lateral(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+	}
+	else {
+		resultado = verifica_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
+	}
+
+	if (resultado)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
+

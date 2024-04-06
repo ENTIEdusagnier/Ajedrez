@@ -18,6 +18,23 @@
 
 #define REY_BLANCO 'K'
 
+#define TORRE_BLANCA 'T'
+#define TORRE_NEGRA 't'
+
+
+#define FILA_TORRE_IZQ_B 8
+#define COLUM_TORRE_IZQ_B 1
+
+#define FILA_TORRE_DER_B 8
+#define COLUM_TORRE_DER_B 8
+
+#define FILA_TORRE_IZQ_N 1
+#define COLUM_TORRE_IZQ_N 1
+
+#define FILA_TORRE_DER_N 1
+#define COLUM_TORRE_DER_N 8
+
+
 #include <windows.h>// Para hacer un Sleep para poder dejar un tiempo y borrar la terminal. (Sacado de mi proyecto hundir la flota).
 #include <iostream>
 
