@@ -335,7 +335,23 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 
 bool logica_rey(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
+	bool turno_blancas = (turno == "blancas");
 
+	const short fila_posicion_inicial_B = 8;
+	const short columna_posicion_inicial_B = 5;
+
+	const short fila_posicion_inicial_B = 1;
+	const short columna_posicion_inicial_B = 5;
+
+	
+	bool movimiento_vertical = ((fila_origen - fila_destino == 1 || fila_destino -  fila_origen == 1) && columna_origen == columna_destino);
+	bool movimiento_lateral = ((columna_origen - columna_destino == 1 || columna_destino - columna_origen == 1)&& fila_origen == fila_destino);
+	bool es_enroque_izquerda = ((fila_origen - fila_destino == 1 || fila_destino - fila_origen == 1) && columna_origen == columna_destino);
+
+	if (!movimiento_vertical && !movimiento_lateral)
+	{
+		return false;
+	}
 
 
 
@@ -344,7 +360,7 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 
 }
 
-bool jaque_al_rei(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
+bool enroque_blancas(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	bool turno_blancas = (turno == "blancas");
 	bool resultado = false;
@@ -380,7 +396,6 @@ bool jaque_al_rei(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 					{
 
 					case 'p':
-						resultado = verifica_jaque_peon(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 						break;
 					}
 
@@ -402,16 +417,6 @@ bool jaque_al_rei(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 
 
-bool jaque_mate() {
-
-
-
-
-
-
-	return false;
-
-}
 
 bool movimiento_correcto(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
@@ -444,11 +449,7 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
 		return false;
 	}
-	if (jaque_al_rei(mapa, turno))
-	{
-		cout << "No puedes mover porque estas en Jaque" << endl;
-		return false;
-	}
+
 
 	else
 	{
