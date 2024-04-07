@@ -17,6 +17,7 @@
 #define ESPACIO ' '
 
 #define REY_BLANCO 'K'
+#define REY_NEGRO 'k'
 
 #define TORRE_BLANCA 'T'
 #define TORRE_NEGRA 't'

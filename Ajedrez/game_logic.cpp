@@ -351,7 +351,7 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 			}
 		}
 		//Lateral
-		else
+		if (es_movimiento_lateral)
 		{
 			if (tipo_movimineto_lateral)
 			{
@@ -379,7 +379,7 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 				reina_correcto = verifica_movimiento_vertical_N_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			}
 		}
-		else
+		if (es_movimiento_lateral)
 		{
 			if (tipo_movimineto_lateral)
 			{
@@ -463,9 +463,146 @@ bool enroque(short fila_origen, short columna_origen, short fila_destino, short 
 				}
 			}
 		}
+		else
+		{
+			for (short columna = columna_destino; columna <= columna_origen; columna++)
+			{
+				for (int i = 0; i < NUM_FILAS; i++) {
+					for (int j = 0; j < NUM_COLUMNAS; j++) {
 
+						if (mapa[i][j] >= CHAR_EMPIEZA_N && mapa[i][j] <= CHAR_FIN_N) {
+
+							char pieza_oponente = mapa[i][j];
+
+							fila_origen_pieza = i;
+							columna_origen_pieza = j;
+
+							switch (pieza_oponente)
+							{
+
+							case 'p':
+								//Verificamos si puede llegar a alguna posicion del enroque
+								resultado = logica_peon(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 't':
+								resultado = logica_torre(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'h':
+								resultado = logica_horse(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'b':
+								resultado = logica_alfil(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'q':
+								resultado = logica_reina(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'k':
+								resultado = logica_rey(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							}
+
+						}
+
+					}
+				}
+			}
+		}
 
 	}
+	else
+	{
+		string turno_cambiado_verificacion = cambiar_turno_enroque(turno);
+
+		if (verificacion_enroque_derecha)
+		{
+			for (short columna = columna_origen; columna <= columna_destino; columna++)
+			{
+				for (int i = 0; i < NUM_FILAS; i++) {
+					for (int j = 0; j < NUM_COLUMNAS; j++) {
+
+						if (mapa[i][j] >= CHAR_EMPIEZA_N && mapa[i][j] <= CHAR_FIN_N) {
+
+							char pieza_oponente = mapa[i][j];
+
+							fila_origen_pieza = i;
+							columna_origen_pieza = j;
+
+							switch (pieza_oponente)
+							{
+
+							case 'P':
+								//Verificamos si puede llegar a alguna posicion del enroque
+								resultado = logica_peon(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'T':
+								resultado = logica_torre(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'H':
+								resultado = logica_horse(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'B':
+								resultado = logica_alfil(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'Q':
+								resultado = logica_reina(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'K':
+								resultado = logica_rey(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							}
+
+						}
+
+					}
+				}
+			}
+		}
+		else
+		{
+			for (short columna = columna_destino; columna <= columna_origen; columna++)
+			{
+				for (int i = 0; i < NUM_FILAS; i++) {
+					for (int j = 0; j < NUM_COLUMNAS; j++) {
+
+						if (mapa[i][j] >= CHAR_EMPIEZA_N && mapa[i][j] <= CHAR_FIN_N) {
+
+							char pieza_oponente = mapa[i][j];
+
+							fila_origen_pieza = i;
+							columna_origen_pieza = j;
+
+							switch (pieza_oponente)
+							{
+
+							case 'p':
+								//Verificamos si puede llegar a alguna posicion del enroque
+								resultado = logica_peon(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 't':
+								resultado = logica_torre(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'h':
+								resultado = logica_horse(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'b':
+								resultado = logica_alfil(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'q':
+								resultado = logica_reina(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							case 'k':
+								resultado = logica_rey(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								break;
+							}
+
+						}
+
+					}
+				}
+			}
+		}
+	}
+
 	//Si puede llegar retornaremos false al enroque
 	if (resultado)
 	{
@@ -604,7 +741,7 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 				return false;
 			}
 
-			if (mapa[fila_destino][columna_destino] != SIN_NADA && mapa[fila_destino][columna_origen - 1] != SIN_NADA)
+			if (mapa[fila_destino][columna_destino] != SIN_NADA && mapa[fila_destino][columna_origen - 1] != SIN_NADA && mapa[fila_destino][columna_destino + 1] != SIN_NADA)
 			{
 				cout << " Estas intentando enrrocar con piezas por el medio" << endl;
 				return false;
@@ -625,6 +762,124 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 			}
 		}
 
+	}
+	//Negras
+	else
+	{
+		if (movimiento_vertical)
+		{
+			if (mapa[fila_destino][columna_destino] == SIN_NADA)
+			{
+				rey_movido_enroque_B = true;
+				return true;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N && mapa[fila_destino][columna_destino] <= CHAR_FIN_N)
+			{
+				cout << "Estas pasando por encima de una pieza propia" << endl;
+				return false;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
+			{
+				rey_movido_enroque_B = true;
+				cout << "Rey Mata" << endl;
+				return true;
+			}
+		}
+		if (movimiento_lateral)
+		{
+			if (mapa[fila_destino][columna_destino] == SIN_NADA)
+			{
+				rey_movido_enroque_B = true;
+				return true;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N && mapa[fila_destino][columna_destino] <= CHAR_FIN_N)
+			{
+				cout << "Estas pasando por encima de una pieza propia" << endl;
+				return false;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
+			{
+				rey_movido_enroque_B = true;
+				cout << "Rey Mata" << endl;
+				return true;
+			}
+		}
+		if (movimiento_diagonal)
+		{
+			if (mapa[fila_destino][columna_destino] == SIN_NADA)
+			{
+				rey_movido_enroque_B = true;
+				return true;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N && mapa[fila_destino][columna_destino] <= CHAR_FIN_N)
+			{
+				cout << "Estas pasando por encima de una pieza propia" << endl;
+				return false;
+			}
+			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
+			{
+				rey_movido_enroque_B = true;
+				cout << "Rey Mata" << endl;
+				return true;
+			}
+		}
+
+		if (es_enroque_derecha) {
+
+			if (rey_movido_enroque_N || torre_derecha_movida_N)
+			{
+				cout << " No puedes hacer enroque ficha movida previamente" << endl;
+				return false;
+			}
+
+			if (mapa[fila_destino][columna_destino] != SIN_NADA && mapa[fila_destino][columna_destino - 1] != SIN_NADA)
+			{
+				cout << " Estas intentando enrrocar con piezas por el medio" << endl;
+				return false;
+			}
+
+			verifica_enroque = enroque(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno, es_enroque_derecha);
+
+			if (verifica_enroque)
+			{
+				mapa[fila_torre_derecha_enroque_B][columna_torre_derecha_enroque_B] = TORRE_NEGRA;
+				mapa[FILA_TORRE_DER_N][COLUM_TORRE_DER_N] = SIN_NADA;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+		}
+		if (es_enroque_izquierda) {
+
+			if (rey_movido_enroque_N || torre_izquierda_movida_N)
+			{
+				cout << " No puedes hacer enroque ficha movida previamente" << endl;
+				return false;
+			}
+
+			if (mapa[fila_destino][columna_destino] != SIN_NADA && mapa[fila_destino][columna_origen - 1] != SIN_NADA && mapa[fila_destino][columna_destino + 1] != SIN_NADA)
+			{
+				cout << " Estas intentando enrrocar con piezas por el medio" << endl;
+				return false;
+			}
+
+			verifica_enroque = enroque(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno, es_enroque_derecha);
+
+
+			if (verifica_enroque)
+			{
+				mapa[fila_torre_izquierda_enroque_B][columna_torre_izquierda_enroque_B] = TORRE_NEGRA;
+				mapa[FILA_TORRE_IZQ_N][COLUM_TORRE_IZQ_N] = SIN_NADA;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 
 }
@@ -766,47 +1021,6 @@ string cambiar_turno_enroque(string turno) {
 	}
 }
 
-bool posiciones_user(char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	short fila_origen, columna_origen, fila_destino, columna_destino;
-	bool posicion_correcta = false;
-
-	while (!posicion_correcta)
-	{
-
-		cout << "Posicion de la pieza que quieres mover" << endl;
-
-		cout << "Fila donde esta la pieza" << endl;
-		cin >> fila_origen;
-
-		cout << "Columna donde esta la pieza" << endl;
-		cin >> columna_origen;
-
-		cout << "Posicion donde quieres mover la pieza" << endl;
-
-		cout << "Fila donde quieres moverla" << endl;
-		cin >> fila_destino;
-
-		cout << "Columna donde quieres moverla" << endl;
-		cin >> columna_destino;
-
-		if (movimiento_correcto(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno))
-		{
-			cout << "moviminento correcto" << endl;
-			posicion_correcta = true;
-			mover_ficha(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
-			Sleep(1000);
-			return true;
-
-		}
-		else
-		{
-			system("cls");
-			cout << "moviminento incorrecto" << endl;
-			return false;
-		}
-	}
-
-}
 
 
