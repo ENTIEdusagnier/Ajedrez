@@ -4,6 +4,7 @@ void juego_acabado(string turno) {
 
 	cout << "Ha Ganada el Jugador de las fichas " << turno << endl;
 
+
 }
 
 
