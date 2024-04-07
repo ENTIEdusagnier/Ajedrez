@@ -438,16 +438,16 @@ bool enroque(short fila_origen, short columna_origen, short fila_destino, short 
 
 							case 'p':
 								//Verificamos si puede llegar a alguna posicion del enroque
-								resultado = verifica_todo_peon(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								resultado = logica_peon(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
 								break;
 							case 't':
-								resultado = verifica_todo_torre(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								resultado = logica_torre(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
 								break;
 							case 'h':
-								resultado = verifica_todo_horse(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								resultado = logica_horse(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
 								break;
 							case 'b':
-								resultado = verifica_todo_alfil(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
+								resultado = logica_alfil(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
 								break;
 							case 'q':
 								resultado = logica_reina(fila_origen_pieza, columna_origen_pieza, fila_destino, columna, mapa, turno_cambiado_verificacion);
@@ -568,7 +568,13 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 			}
 		}
 
-		if (es_enroque_derecha && !rey_movido_enroque_B && !torre_derecha_movida_B) {
+		if (es_enroque_derecha) {
+
+			if (rey_movido_enroque_B || torre_derecha_movida_B)
+			{
+				cout << " No puedes hacer enroque ficha movida previamente" << endl;
+				return false;
+			}
 
 			if (mapa[fila_destino][columna_destino] != SIN_NADA && mapa[fila_destino][columna_destino - 1] != SIN_NADA)
 			{
@@ -590,7 +596,13 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 			}
 
 		}
-		if (es_enroque_izquierda && !rey_movido_enroque_B && !torre_izquierda_movida_B) {
+		if (es_enroque_izquierda) {
+
+			if (rey_movido_enroque_B || torre_izquierda_movida_B)
+			{
+				cout << " No puedes hacer enroque ficha movida previamente" << endl;
+				return false;
+			}
 
 			if (mapa[fila_destino][columna_destino] != SIN_NADA && mapa[fila_destino][columna_origen - 1] != SIN_NADA)
 			{

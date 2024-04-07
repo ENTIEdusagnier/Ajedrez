@@ -10,4 +10,3 @@ bool verifica_iquierda_arriba(short fila_origen, short columna_origen, short fil
 bool verifica_derecha_arriba(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno);
 bool verifica_iquierda_abajo(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno);
 
-bool verifica_todo_alfil(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno);

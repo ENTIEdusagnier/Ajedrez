@@ -21,7 +21,7 @@ void juego() {
 		sacar_mapa(mapa);
 		if (posiciones_user(mapa, turno))
 		{
-			turno = cambiar_turno(turno);
+			//turno = cambiar_turno(turno);
 			system("cls");
 			
 		}
