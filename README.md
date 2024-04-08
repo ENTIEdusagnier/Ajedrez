@@ -1,11 +1,23 @@
 # Ajedrez
 
-La lógica puede variar (es decir, hace lo mismo pero de manera diferente) debido a que está hecho en diferentes días.
+¡Bienvenido al juego de ajedrez en C++! Este es un proyecto original que implementa las reglas básicas del ajedrez (sin captura al paso), incluido el movimiento de las piezas y el enroque.
 
-TODA LA LÓGICA ES ORIGINAL. NO HAY NINGÚN PLAGIO. En caso de que detectes posible plagio, avísame, ya que no he copiado ni utilizado chatGPT fuera de lo comentado (si acaso).
+### Características principales:
+- **Funcionalidad completa:** Todas las piezas se mueven según las reglas del ajedrez.
+- **Fin del juego:** La partida finaliza cuando un rey es capturado.
+- **Enroque:** El enroque está implementado y es completamente funcional.
 
-Puede haber cosas que podrían mejorar, es decir, que funcionan, pero haciendo un cambio mínimo podría lograr lo mismo sin agregar más líneas. Al funcionar correctamente, prefiero no modificarlo para evitar errores.
+### Fecha de publicación:
+Este proyecto fue publicado el 08/04/2024. Para entregar el proyecto a ENTI.
 
-Recomiendo que, si crees que hay plagio, revises los commits para ver que la lógica no cambia drásticamente. También, todo está hecho con todas mis capacidades y aprendizajes de programación.
+### Aviso sobre plagio:
+> [!WARNING]
+> Este proyecto es totalmente original y cualquier copia sin atribución es considerada plagio. Si encuentras alguna similitud con otros proyectos, por favor, házmelo saber para investigarlo.
 
-No he podido poner todo los heathers con el heather General.h daba +170 errores sin sentidos.
+¡Disfruta del juego y que gane el mejor estratega!
+
+### Code Review
+El código está comentado de una manera lógica. Si hay una función que hace 4 veces lo mismo solo cambia la verificación por el turno y otros detalles sin importancia, doy a entender que por el nombre de variables y similitud con otra parte del código comentado no es necesario.
+
+> [!IMPORTANT]
+> ¡Esperemos buena nota! :)

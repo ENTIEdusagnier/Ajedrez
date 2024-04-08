@@ -46,7 +46,7 @@ bool verifica_iquierda_arriba(short fila_origen, short columna_origen, short fil
 		return true;
 	}
 }
-
+//Hace lo mismo que las otras funciones solo cambia el for.
 bool verifica_derecha_arriba(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	for (short fila = fila_origen - 1, columna = columna_origen + 1; fila > fila_destino && columna < columna_destino; fila--, columna++)
@@ -66,7 +66,7 @@ bool verifica_derecha_arriba(short fila_origen, short columna_origen, short fila
 	}
 }
 
-
+//Hace lo mismo que las otras funciones solo cambia el for.
 bool verifica_iquierda_abajo(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	for (short fila = fila_origen + 1, columna = columna_origen - 1; fila < fila_destino && columna > columna_destino; fila++, columna--)
