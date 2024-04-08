@@ -3,7 +3,7 @@
 
 void main() {
 
-	
+	//Ejecutamos el juego.
 	juego();
 
 	

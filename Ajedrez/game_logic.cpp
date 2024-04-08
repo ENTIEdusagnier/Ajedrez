@@ -1,5 +1,6 @@
 #include "General.h"
 
+//Crearenis unos booleanos globales los cuales nos indicaran si los reyes o torres se han movido para el enroque.
 bool rey_movido_enroque_B = false;
 bool rey_movido_enroque_N = false;
 
@@ -11,11 +12,12 @@ bool torre_derecha_movida_N = false;
 
 bool logica_peon(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-
+	//Creamos dos bool para la verificacion del movimiento del peon.
 	bool peon_correcto = false;
 
 	bool movimiento_lateral = (columna_origen != columna_destino);
 
+	//Si el movimineto es lateral verificara la funcion lateral.
 	if (movimiento_lateral) {
 		peon_correcto = verifica_movimiento_lateral(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 	}
@@ -23,7 +25,7 @@ bool logica_peon(short fila_origen, short columna_origen, short fila_destino, sh
 		peon_correcto = verifica_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
 	}
 
-
+	//Si peon es correcto retornara true para mover la ficha.
 	if (peon_correcto) {
 		return true;
 	}
@@ -36,6 +38,7 @@ bool logica_peon(short fila_origen, short columna_origen, short fila_destino, sh
 
 bool logica_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
+	//Verificamos todo tipo de movimineto de la torre.
 	bool es_turno_blancas = (turno == "blancas");
 
 	bool es_movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
@@ -46,13 +49,13 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 	bool tipo_movimineto_lateral = (columna_destino > columna_origen);
 
 	bool torre_correcta = false;
-
+	//Si no es un movimiento veritcal o lateral significa que esta inteando mover de una manera no permitida.
 	if (!es_movimiento_lateral && !es_movimiento_vertical)
 	{
 		cout << "No puedes mover la torre en diagonal" << endl;
 		return false;
 	}
-
+	//Verificamos por turnos
 	if (es_turno_blancas)
 	{
 		if (es_movimiento_vertical)
@@ -62,6 +65,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 			{
 				torre_correcta = verifica_movimiento_vertical_B(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 
+				//Sirve para saber si la torre se ha movido previaminete y que torre.
 				if (torre_correcta && fila_origen == FILA_TORRE_IZQ_B && columna_origen == COLUM_TORRE_IZQ_B)
 				{
 					torre_izquierda_movida_B = true;
@@ -73,6 +77,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 			}
 			else //Abajo 
 			{
+				//No verifica la torre blanca porque no puede como primer movimineto moverse hacia abajo
 				torre_correcta = verifica_movimiento_vertical_B_abajo(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 			}
 		}
@@ -118,14 +123,6 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 			{
 				torre_correcta = verifica_movimiento_vertical_N(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 
-				if (torre_correcta && fila_origen == FILA_TORRE_IZQ_N && columna_origen == COLUM_TORRE_IZQ_N)
-				{
-					torre_izquierda_movida_N = true;
-				}
-				if (torre_correcta && fila_origen == FILA_TORRE_DER_N && columna_origen == COLUM_TORRE_DER_N)
-				{
-					torre_derecha_movida_N = true;
-				}
 			}
 			else
 			{
@@ -140,7 +137,8 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 					torre_derecha_movida_N = true;
 				}
 			}
-		}
+		} 
+		//Lateral
 		else
 		{
 			if (tipo_movimineto_lateral)
@@ -171,7 +169,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 			}
 		}
 	}
-
+	// Si torre es correcta retorna true para mover la torre.
 	if (!torre_correcta)
 	{
 		return false;
@@ -220,7 +218,7 @@ bool logica_horse(short fila_origen, short columna_origen, short fila_destino, s
 			caballo_correcto = verificar_horse_N(fila_origen, columna_origen, fila_destino, columna_destino, mapa);
 		}
 	}
-
+	//Verifica que el caballo sea correcto.
 	if (!caballo_correcto)
 	{
 		return false;
@@ -293,6 +291,8 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 	bool es_turno_blancas = (turno == "blancas");
 	bool reina_correcto = false;
 
+	//Cogemos la logica de alfil y torre y las combinamos para hacer la reina.
+
 	//Movimientos diagonales
 	bool es_movimiento_iquierda_arriba = (fila_origen - fila_destino == columna_origen - columna_destino && fila_destino < fila_origen && columna_destino < columna_origen);
 	bool es_movimiento_derecha_arriba = (fila_origen - fila_destino == columna_destino - columna_origen && fila_destino < fila_origen && columna_destino > columna_origen);
@@ -306,7 +306,7 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 	bool tipo_movimiento_vertical = (fila_destino < fila_origen && columna_origen == columna_destino); 
 	bool tipo_movimineto_lateral = (columna_destino > columna_origen && fila_origen == fila_destino);
 	 
-
+	//Si no es ningun movimiento significa que esta mal.
 	if (!es_movimiento_iquierda_arriba && !es_movimiento_derecha_arriba && !es_movimiento_iquierda_abajo && !es_movimiento_derecha_abajo && !es_movimiento_lateral && !es_movimiento_vertical)
 	{
 		cout << "La reina no puede hacer este movimiento." << endl;
@@ -412,24 +412,28 @@ bool enroque(short fila_origen, short columna_origen, short fila_destino, short 
 	//Si no es derecha sera izquierda
 	bool verificacion_enroque_derecha = (es_enroque_derecha);
 
+	//Creamos una variable la cual almazenara la ficha encontrada en el mapa.
 	short fila_origen_pieza, columna_origen_pieza;
 
 
 	if (turno_blancas)
 	{
-		string turno_cambiado_verificacion = cambiar_turno_enroque(turno);
+		//Cambiamos el turno para la verificacion de si blancas quiere hacer enroque verifique las fichas negras
+		string turno_cambiado_verificacion = cambiar_turno(turno);
 
 		if (verificacion_enroque_derecha)
 		{
+			//Por cada posicion de la columna que haya entre el enroque verificara si alguna pieza puede acceder a esa posicion
 			for (short columna = columna_origen; columna <= columna_destino; columna++)
 			{
+				//Sacamos el mapa y por cada pieza negra almacenaremos la posicion y la pasaremos por la logica.
 				for (int i = 0; i < NUM_FILAS; i++) {
 					for (int j = 0; j < NUM_COLUMNAS; j++) {
 
 						if (mapa[i][j] >= CHAR_EMPIEZA_N && mapa[i][j] <= CHAR_FIN_N) {
 
 							char pieza_oponente = mapa[i][j];
-
+							//guardamos la posicion extraida para pasarla a la verificacion.
 							fila_origen_pieza = i;
 							columna_origen_pieza = j;
 
@@ -463,6 +467,7 @@ bool enroque(short fila_origen, short columna_origen, short fila_destino, short 
 				}
 			}
 		}
+		//Enroque hacia la izquierda
 		else
 		{
 			for (short columna = columna_destino; columna <= columna_origen; columna++)
@@ -509,9 +514,10 @@ bool enroque(short fila_origen, short columna_origen, short fila_destino, short 
 		}
 
 	}
+	//Turno Negras
 	else
 	{
-		string turno_cambiado_verificacion = cambiar_turno_enroque(turno);
+		string turno_cambiado_verificacion = cambiar_turno(turno);
 
 		if (verificacion_enroque_derecha)
 		{
@@ -619,7 +625,7 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 	bool verifica_enroque = false;
 
 
-
+	//Creamos unas constantes las cuales marcan la posiciones donde quedan la torre cuando esta enrocada.
 	const short fila_torre_izquierda_enroque_B = 8;
 	const short columna_torre_izquierda_enroque_B = 4;
 
@@ -633,13 +639,16 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 	const short fila_torre_derecha_enroque_N = 1;
 	const short columna_torre_derecha_enroque_N = 6;
 
+	//Verificamos si el tipo de movimiento insertado
 	bool movimiento_vertical = ((fila_origen - fila_destino == 1 || fila_destino - fila_origen == 1) && columna_origen == columna_destino);
 	bool movimiento_lateral = ((columna_origen - columna_destino == 1 || columna_destino - columna_origen == 1) && fila_origen == fila_destino);
 	bool movimiento_diagonal = ((fila_origen - fila_destino == 1 || fila_destino - fila_origen == 1) && (columna_origen - columna_destino == 1 || columna_destino - columna_origen == 1));
 
+	//Verificamos que tipo de enroque quiere el usuario.
 	bool es_enroque_derecha = (columna_destino - columna_origen == 2 && fila_origen == fila_destino);
 	bool es_enroque_izquierda = (columna_origen - columna_destino == 2 && fila_origen == fila_destino);
 
+	//si no es ningun movimiento dara error.
 	if (!movimiento_vertical && !movimiento_lateral && !movimiento_diagonal && !es_enroque_derecha && !es_enroque_izquierda)
 	{
 		return false;
@@ -648,24 +657,29 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 	if (turno_blancas)
 	{
 		if (movimiento_vertical)
-		{
+		{	
+			//Verificara si la posicion del rey no hay nada
 			if (mapa[fila_destino][columna_destino] == SIN_NADA)
 			{
+				//Si es asi pondra el booleando de rey movido como true.
 				rey_movido_enroque_B = true;
 				return true;
 			}
 			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 			{
+				//Si intenta ponserse en una pieza de su mismo equipo no podra.
 				cout << "Estas pasando por encima de una pieza propia" << endl;
 				return false;
 			}
 			if (mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_N && mapa[fila_destino][columna_destino] <= CHAR_FIN_N)
 			{
+				//En caso que mate.
 				rey_movido_enroque_B = true;
 				cout << "Rey Mata" << endl;
 				return true;
 			}
 		}
+		//Lo mismo pero para Lateral
 		if (movimiento_lateral)
 		{
 			if (mapa[fila_destino][columna_destino] == SIN_NADA)
@@ -685,6 +699,7 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 				return true;
 			}
 		}
+		//Lo mismo pero para diagonal
 		if (movimiento_diagonal)
 		{
 			if (mapa[fila_destino][columna_destino] == SIN_NADA)
@@ -704,29 +719,32 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 				return true;
 			}
 		}
-
+		//En caso que sea enroque derecha:
 		if (es_enroque_derecha) {
-
+			
+			//Verifica si alguna pieza se ha movido.
 			if (rey_movido_enroque_B || torre_derecha_movida_B)
 			{
 				cout << " No puedes hacer enroque ficha movida previamente" << endl;
 				return false;
 			}
-
+			//Si no se ha movido nada, verificara que no haya piezas entre medias.
 			if (mapa[fila_destino][columna_destino] != SIN_NADA && mapa[fila_destino][columna_destino - 1] != SIN_NADA)
 			{
 				cout << " Estas intentando enrrocar con piezas por el medio" << endl;
 				return false;
 			}
-
+			//Si no hay ningun error por parte del usuario verificara si el enroque es posible.
 			verifica_enroque = enroque(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno, es_enroque_derecha);
 
+			//Si enroque es posible hara el cambio de fichas.
 			if (verifica_enroque)
 			{
 				mapa[fila_torre_derecha_enroque_B][columna_torre_derecha_enroque_B] = TORRE_BLANCA;
 				mapa[FILA_TORRE_DER_B][COLUM_TORRE_DER_B] = SIN_NADA;
 				return true;
 			}
+			//Si no dira que no es posible.
 			else
 			{
 				return false;
@@ -740,7 +758,7 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 				cout << " No puedes hacer enroque ficha movida previamente" << endl;
 				return false;
 			}
-
+			//En este caso al ser un enroque de largo verifica las tres casillas donde se moveran el enorque.
 			if (mapa[fila_destino][columna_destino] != SIN_NADA && mapa[fila_destino][columna_origen - 1] != SIN_NADA && mapa[fila_destino][columna_destino + 1] != SIN_NADA)
 			{
 				cout << " Estas intentando enrrocar con piezas por el medio" << endl;
@@ -763,7 +781,7 @@ bool logica_rey(short fila_origen, short columna_origen, short fila_destino, sho
 		}
 
 	}
-	//Negras
+	//Lo mismo para las Negras
 	else
 	{
 		if (movimiento_vertical)
@@ -922,9 +940,10 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 		return false;
 	}
 
-
+	//Si ningun if es afectado significa que el movimiento en el tablero es valido (sin logica)
 	else
 	{
+		//Aqui con el switch verificaremos todos los caracteres posibles y enviaremos a la funcion de logica de la misma.
 		bool resultado = false;
 		switch (mapa[fila_origen][columna_origen])
 		{
@@ -954,6 +973,7 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 			break;
 		}
 
+		//Si el resultado es valido retornaremos true.
 		if (resultado)
 		{
 			return true;
@@ -973,11 +993,11 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 
 void mover_ficha(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	char ficha_a_mover = mapa[fila_origen][columna_origen];
 
 	//Verifica si el peon correcto se combierte a dama o no.
 	if (peon_a_reina(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno))
 	{
+		//En caso que sea un peon a reina cambiara el peon por reina.
 		if (turno == "blancas")
 		{
 			mapa[fila_origen][columna_origen] = SIN_NADA;
@@ -990,7 +1010,9 @@ void mover_ficha(short fila_origen, short columna_origen, short fila_destino, sh
 		}
 
 	}
+	//Si no es reina movera la ficha normal.
 	else {
+		char ficha_a_mover = mapa[fila_origen][columna_origen];
 		mapa[fila_origen][columna_origen] = SIN_NADA;
 		mapa[fila_destino][columna_destino] = ficha_a_mover;
 	}
@@ -998,7 +1020,8 @@ void mover_ficha(short fila_origen, short columna_origen, short fila_destino, sh
 }
 
 string cambiar_turno(string turno) {
-
+	
+	//Funcion para cambiar el turno
 	if (turno == "blancas")
 	{
 		return "negras";
@@ -1009,17 +1032,7 @@ string cambiar_turno(string turno) {
 	}
 }
 
-string cambiar_turno_enroque(string turno) {
 
-	if (turno == "blancas")
-	{
-		return "negras";
-	}
-	else
-	{
-		return "blancas";
-	}
-}
 
 
 

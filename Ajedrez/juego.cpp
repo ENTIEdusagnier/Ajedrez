@@ -12,10 +12,13 @@ void juego_acabado(string turno) {
 
 void juego() {
 
+	//Creamos el mapa con el tamaño adecuado
 	char mapa[NUM_FILAS][NUM_COLUMNAS];
+	//Tambien la variable de el juego activo y el turno.
 	bool juego_activo = true;
 	string turno = "blancas";
 
+	//Activamos las funciones de crear_tabla y poner_piezas del cpp de mapa
 	crear_tabla(mapa);
 	poner_piezas(mapa);
 
@@ -23,15 +26,18 @@ void juego() {
 	cout << "   _____ _    _ ______  _____ _____ \n  / ____| |  | |  ____|/ ____/ ____| \n | |    | |__| | |__  | (___| (___  \n | |    |  __  |  __|  \\___  \\___ \\ \n | |____| |  | | |____ ____) |___) | \n  \\_____|_|  |_|______|_____/_____/ \n" << endl;
 
 
-
+	//Mientras el juego este activo
 	while (juego_activo)
 	{
+		//Sacaremos el turno y el mapa
 		cout << "El turno es de: " << turno << endl;
 		sacar_mapa(mapa);
-
+		
+		//Creamos la variable de insert de los usuarios y si la posicion es correcta
 		short fila_origen, columna_origen, fila_destino, columna_destino;
 		bool posicion_correcta = false;
 
+		//Verificacion de la pieza es correcta
 		while (!posicion_correcta)
 		{
 
@@ -51,11 +57,14 @@ void juego() {
 			cout << "Columna donde quieres moverla" << endl;
 			cin >> columna_destino;
 
+			//Si el movimineto del usuario es correcto
 			if (movimiento_correcto(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno))
 			{
+				//Saldra del bucle
 				cout << "moviminento correcto" << endl;
 				posicion_correcta = true;
 
+				//Si la pieza comida es algun rey acabara el juego y sacara un mensaje final.
 				if (mapa[fila_destino][columna_destino] == REY_BLANCO || mapa[fila_destino][columna_destino] == REY_NEGRO)
 				{
 					mover_ficha(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
@@ -66,6 +75,7 @@ void juego() {
 					juego_acabado(turno);
 
 				}
+				//Si no es un rey seguira el juego cambiando el turno.
 				else
 				{
 					mover_ficha(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno);
@@ -75,6 +85,7 @@ void juego() {
 					turno = cambiar_turno(turno);
 				}
 			}
+			//si el movimiento no es correcto volvera al bucle.
 			else
 			{
 				system("cls");
