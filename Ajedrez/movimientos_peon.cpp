@@ -5,7 +5,7 @@
 bool verifica_movimiento(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	//Solo verifica que no haya errores.
-	bool es_turno_blancas = (turno == "blancas");
+	bool es_turno_blancas = (turno == BLANCAS);
 	const short fila_inicial_blancas = 7;
 	const short fila_inicial_negras = 2;
 	bool es_fila_inicial_blancas = (fila_origen == fila_inicial_blancas);
@@ -75,7 +75,7 @@ bool verifica_movimiento(short fila_origen, short columna_origen, short fila_des
 }
 bool verifica_movimiento_lateral(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	bool turno_blancas = (turno == "blancas");
+	bool turno_blancas = (turno == BLANCAS);
 
 	if (turno_blancas)
 	{

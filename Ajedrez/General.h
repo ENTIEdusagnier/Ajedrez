@@ -35,6 +35,8 @@
 #define FILA_TORRE_DER_N 1
 #define COLUM_TORRE_DER_N 8
 
+#define BLANCAS "blancas"
+#define NEGRAS "negras"
 
 #include <windows.h>// Para hacer un Sleep para poder dejar un tiempo y borrar la terminal. (Sacado de mi proyecto hundir la flota).
 #include <iostream>

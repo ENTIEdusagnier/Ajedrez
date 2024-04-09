@@ -16,7 +16,7 @@ void juego() {
 	char mapa[NUM_FILAS][NUM_COLUMNAS];
 	//Tambien la variable de el juego activo y el turno.
 	bool juego_activo = true;
-	string turno = "blancas";
+	string turno = BLANCAS;
 
 	//Activamos las funciones de crear_tabla y poner_piezas del cpp de mapa
 	crear_tabla(mapa);

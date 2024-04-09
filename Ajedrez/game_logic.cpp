@@ -39,7 +39,7 @@ bool logica_peon(short fila_origen, short columna_origen, short fila_destino, sh
 bool logica_torre(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
 	//Verificamos todo tipo de movimineto de la torre.
-	bool es_turno_blancas = (turno == "blancas");
+	bool es_turno_blancas = (turno == BLANCAS);
 
 	bool es_movimiento_vertical = (fila_origen != fila_destino && columna_origen == columna_destino);
 	bool es_movimiento_lateral = (fila_origen == fila_destino && columna_origen != columna_destino);
@@ -184,7 +184,7 @@ bool logica_torre(short fila_origen, short columna_origen, short fila_destino, s
 
 bool logica_horse(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	bool es_turno_blancas = (turno == "blancas");
+	bool es_turno_blancas = (turno == BLANCAS);
 	bool caballo_correcto = false;
 
 	//Verifica si los movimientos verticales y inferiores del caballo es hacia la derecha o izquierda
@@ -288,7 +288,7 @@ bool logica_alfil(short fila_origen, short columna_origen, short fila_destino, s
 
 bool logica_reina(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	bool es_turno_blancas = (turno == "blancas");
+	bool es_turno_blancas = (turno == BLANCAS);
 	bool reina_correcto = false;
 
 	//Cogemos la logica de alfil y torre y las combinamos para hacer la reina.
@@ -406,7 +406,7 @@ bool logica_reina(short fila_origen, short columna_origen, short fila_destino, s
 
 bool enroque(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno, bool es_enroque_derecha) {
 
-	bool turno_blancas = (turno == "blancas");
+	bool turno_blancas = (turno == BLANCAS);
 	bool resultado = false;
 
 	//Si no es derecha sera izquierda
@@ -621,7 +621,7 @@ bool enroque(short fila_origen, short columna_origen, short fila_destino, short 
 
 bool logica_rey(short fila_origen, short columna_origen, short fila_destino, short columna_destino, char mapa[NUM_FILAS][NUM_COLUMNAS], string turno) {
 
-	bool turno_blancas = (turno == "blancas");
+	bool turno_blancas = (turno == BLANCAS);
 	bool verifica_enroque = false;
 
 
@@ -926,14 +926,14 @@ bool movimiento_correcto(short fila_origen, short columna_origen, short fila_des
 		return false;
 	}
 	//Verificamos que si esta el turno de las blancas (Mayusculas) no intente mover una ficha del jugador de negras (minusculas)
-	if (turno == "blancas" && mapa[fila_origen][columna_origen] >= CHAR_EMPIEZA_N && mapa[fila_origen][columna_origen] <= CHAR_FIN_N)
+	if (turno == BLANCAS && mapa[fila_origen][columna_origen] >= CHAR_EMPIEZA_N && mapa[fila_origen][columna_origen] <= CHAR_FIN_N)
 	{
 		system("cls");
 		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
 		return false;
 	}
 	//Verificamos lo mismo con el jugador de las negras.
-	if (turno == "negras" && mapa[fila_origen][columna_origen] >= CHAR_EMPIEZA_B && mapa[fila_origen][columna_origen] <= CHAR_FIN_B)
+	if (turno == NEGRAS && mapa[fila_origen][columna_origen] >= CHAR_EMPIEZA_B && mapa[fila_origen][columna_origen] <= CHAR_FIN_B)
 	{
 		system("cls");
 		cout << "Estas intentando cambiar una ficha que no te pertenece" << endl;
@@ -998,7 +998,7 @@ void mover_ficha(short fila_origen, short columna_origen, short fila_destino, sh
 	if (peon_a_reina(fila_origen, columna_origen, fila_destino, columna_destino, mapa, turno))
 	{
 		//En caso que sea un peon a reina cambiara el peon por reina.
-		if (turno == "blancas")
+		if (turno == BLANCAS)
 		{
 			mapa[fila_origen][columna_origen] = SIN_NADA;
 			mapa[fila_destino][columna_destino] = REINA_BLANCA;
@@ -1022,13 +1022,13 @@ void mover_ficha(short fila_origen, short columna_origen, short fila_destino, sh
 string cambiar_turno(string turno) {
 	
 	//Funcion para cambiar el turno
-	if (turno == "blancas")
+	if (turno == BLANCAS)
 	{
-		return "negras";
+		return NEGRAS;
 	}
 	else
 	{
-		return "blancas";
+		return BLANCAS;
 	}
 }
 

@@ -14,8 +14,8 @@ bool verifica_derecha_abajo(short fila_origen, short columna_origen, short fila_
 		}
 	}
 	//Si destino es igual a oponente o sin nada y el for da vacio pondra la pieza.
-	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
-		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
+	if ((turno == BLANCAS && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
+		|| (turno == NEGRAS && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 		|| mapa[fila_destino][fila_destino] == SIN_NADA) {
 
 		cout << "Ficha puesta" << endl;
@@ -38,8 +38,8 @@ bool verifica_iquierda_arriba(short fila_origen, short columna_origen, short fil
 
 	}
 	//Si destino es igual a oponente o sin nada y el for da vacio pondra la pieza.
-	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
-		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
+	if ((turno == BLANCAS && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
+		|| (turno == NEGRAS && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 		|| mapa[fila_destino][fila_destino] == SIN_NADA) {
 
 		cout << "Ficha puesta" << endl;
@@ -57,8 +57,8 @@ bool verifica_derecha_arriba(short fila_origen, short columna_origen, short fila
 			return false;
 		}
 	}
-	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
-		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
+	if ((turno == BLANCAS && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
+		|| (turno == NEGRAS && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 		|| mapa[fila_destino][fila_destino] == SIN_NADA) {
 
 		cout << "Ficha puesta" << endl;
@@ -80,8 +80,8 @@ bool verifica_iquierda_abajo(short fila_origen, short columna_origen, short fila
 		}
 
 	}
-	if ((turno == "blancas" && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
-		|| (turno == "negras" && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
+	if ((turno == BLANCAS && mapa[fila_destino][fila_destino] >= CHAR_EMPIEZA_N)
+		|| (turno == NEGRAS && mapa[fila_destino][columna_destino] >= CHAR_EMPIEZA_B && mapa[fila_destino][columna_destino] <= CHAR_FIN_B)
 		|| mapa[fila_destino][fila_destino] == SIN_NADA) {
 
 		cout << "Ficha puesta" << endl;
